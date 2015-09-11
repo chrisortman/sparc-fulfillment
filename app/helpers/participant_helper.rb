@@ -1,17 +1,4 @@
 module ParticipantHelper
-
-  def performed_by_dropdown procedure
-    identities = Identity.joins(:clinical_providers).where(clinical_providers: { organization: procedure.protocol.organization })
-
-    if procedure.performer.present?
-      options = options_for_select(identities.map { |identity| [identity.full_name, identity.id] })
-    else
-      options = options_for_select(identities.map { |identity| [identity.full_name, identity.id] }.insert(0, [nil, nil]))
-    end
-
-    content_tag(:select, options, class: 'performed-by-dropdown selectpicker', data: { width: '125px' }, 'showIcon' => false, id: "performed-by-#{procedure.id}")
-  end
-
   def appointments_for_select arm, participant
     appointments = []
     participant.appointments.each do |appt|
@@ -72,6 +59,14 @@ module ParticipantHelper
         "<i class='glyphicon glyphicon-calendar'></i>",
         "</a>"
       ].join ""
+    end
+  end
+
+  def phoneNumberFormatter participant
+    if participant.phone.length == 10
+      "#{participant.phone[0..2]}-#{participant.phone[3..5]}-#{participant.phone[6..10]}"
+    else
+      participant.phone
     end
   end
 

@@ -46,6 +46,11 @@ class Procedure < ActiveRecord::Base
      ["O", "other_billing_qty"]]
   end
 
+  def performable_by
+    #Returns identities that are allowed to be the performer for this procedure, formatted for an options_for_select helper
+    Identity.joins(:clinical_providers).where(clinical_providers: {organization: self.protocol.organization}).map {|identity| [identity.full_name, identity.id]}
+  end
+
   def formatted_billing_type
     case self.billing_type
     when "research_billing_qty"
@@ -111,6 +116,25 @@ class Procedure < ActiveRecord::Base
     else
       raise ActiveRecord::ActiveRecordError
     end
+  end
+
+  def destroy_regardless_of_status
+    #Destroy task, since delete won't fire after_destroy hooks
+    task.destroy if task
+    #Destroy notes, for same reason
+    notes.destroy_all if notes.any?
+    #Finally, delete, not destroy procedure
+    self.delete
+  end
+
+  def reset
+    #Reset Status
+    self.update_attributes(status: "unstarted")
+    #Remove tasks
+    task.destroy if task
+    #Remove notes
+    notes.destroy_all if notes.any?
+    self.reload
   end
 
   def completed_date=(completed_date)

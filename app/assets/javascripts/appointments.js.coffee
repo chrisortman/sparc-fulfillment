@@ -48,6 +48,15 @@ $ ->
       type: 'PATCH'
       url:  "/appointments/#{appointment_id}?field=completed_date"
 
+  $(document).on 'click', '.reset_visit', ->
+    data = appointment_id: $(this).parents('.row.appointment').data('id')
+    if confirm("Resetting this appointment will delete all data which has been recorded for this appointment, are you sure you wish to continue?")
+      $.ajax
+        type: 'PUT'
+        url: "/multiple_procedures/reset_procedures.js"
+        data: data
+
+
   # Procedure buttons
 
   $(document).on 'dp.hide', ".completed_date_field", ->
@@ -84,21 +93,21 @@ $ ->
   $(document).on 'click', 'label.status.complete', ->
     active        = $(this).hasClass('active')
     procedure_id  = $(this).parents('.procedure').data('id')
-    performer_id  = $(this).parents('.procedure').find('.performed-by .selectpicker').selectpicker('val')
-    status        = null
-    # undo complete status
     if active
-      status = "unstarted"
+      # undo complete status
       $(this).removeClass('selected_before')
-      $(".procedure[data-id='#{procedure_id}']").find(".completed_date_field input").val(null)
+      $(".procedure[data-id='#{procedure_id}'] .completed_date_field input").val(null)
+      $(".procedure[data-id='#{procedure_id}'] .performed-by .selectpicker").selectpicker('val', null)
+      data = procedure:
+              status: "unstarted"
+              performer_id: null
     else
-      status = "complete"
+      #Actually complete procedure
       $(this).addClass('selected_before')
       $(this).removeClass('inactive')
-
-    data = procedure:
-            status: status
-            performer_id: performer_id
+      data = procedure:
+              status: "complete"
+              performer_id: gon.current_identity_id
 
     $.ajax
       type: 'PUT'
@@ -110,7 +119,10 @@ $ ->
     procedure_id  = $(this).parents('.procedure').data('id')
     # undo incomplete status
     if active
-      data = procedure: status: "unstarted"
+      $(".procedure[data-id='#{procedure_id}'] .performed-by .selectpicker").selectpicker('val', null)
+      data = procedure:
+              status: "unstarted"
+              performer_id: null
 
       $.ajax
         type: 'PUT'
