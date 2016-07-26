@@ -15,13 +15,14 @@
 //= require tableExport
 //= require jquery.base64
 //= require moment
-//= require bootstrap-datetimepicker
 //= require moment/en-gb
+//= require bootstrap-datetimepicker
 //= require jquery.remotipart
 //= require nprogress
 //= require underscore
 //= require bootstrap-multiselect
 //= require bootstrap-contextmenu
+//= require bootstrap-table-cookie
 
 //= require global
 //= require protocols

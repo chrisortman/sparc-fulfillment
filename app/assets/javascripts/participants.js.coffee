@@ -1,5 +1,10 @@
 $ ->
 
+  $('#completed-appointments-table').on 'click-row.bs.table', (row, $element) ->
+    $.ajax
+      type: 'GET'
+      url: "/appointments/#{$element.id}.js"
+
   $(document).on 'click', '.new-participant', ->
     data =
       'protocol_id' : $(this).data('protocol-id')
@@ -36,6 +41,8 @@ $ ->
   $("#participant-info").bootstrapTable 'refresh', {silent: true}
 
 (exports ? this).visitSorter = (a, b) ->
-  format = (string) -> parseInt string.split('/').reverse().join('')
+  format = (string) -> 
+    mdy_array = string.split('/')
+    parseInt [mdy_array[2], mdy_array[0], mdy_array[1]].join('')
 
   if format(a) > format(b) then -1 else 1

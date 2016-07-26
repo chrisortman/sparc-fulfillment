@@ -10,36 +10,131 @@ RSpec.describe VisitGroup, type: :model do
   context 'validations' do
     it { is_expected.to validate_presence_of :arm_id }
     it { is_expected.to validate_presence_of :name }
-  end
+    it { is_expected.to validate_presence_of :position }
 
-  context 'if use epic:' do
-    it "set use_epic to true " do
-      ClimateControl.modify USE_EPIC: 'true' do
-        is_expected.to validate_presence_of :day
-        is_expected.to validate_numericality_of :day
+    context 'if use epic:' do
+      it "sets use_epic to true" do
+        ClimateControl.modify USE_EPIC: 'true' do
+          is_expected.to validate_presence_of :day
+          is_expected.to validate_numericality_of :day
+        end
       end
     end
-  end
 
-  context 'if not use epic:' do
-    it "sets USE_EPIC to false" do
-      ClimateControl.modify USE_EPIC: 'false' do
-        is_expected.not_to validate_presence_of :day
+    context 'if not use epic:' do
+      it "sets use_epic to false" do
+        ClimateControl.modify USE_EPIC: 'false' do
+          is_expected.not_to validate_presence_of :day
+        end
+      end
+    end
+
+    context 'if day present' do
+      context "insertion results in in-order days" do
+        it "should be valid" do
+          arm = Arm.create(subject_count: 1, visit_count: 1, name: "Arm1")
+          create(:visit_group, position: 1, day: 1, arm: arm)
+          create(:visit_group, position: 2, day: 8, arm: arm)
+
+          vg = build(:visit_group, position: 2, day: 2, arm: arm)
+
+          expect(vg).to be_valid
+        end
+      end
+
+      context "insertion results in out-of-order days" do
+        it "should be invalid" do
+          arm = Arm.create(subject_count: 1, visit_count: 1, name: "Arm1")
+          create(:visit_group, position: 1, day: 1, arm: arm)
+          create(:visit_group, position: 2, day: 8, arm: arm)
+
+          vg = build(:visit_group, position: 2, day: 0, arm: arm)
+
+          expect(vg).not_to be_valid
+        end
+      end
+
+      context "changing position towards the beginning" do
+        context "results in in-order days" do
+          it "should be valid" do
+            arm = Arm.create(subject_count: 1, visit_count: 1, name: "Arm1")
+            create(:visit_group, position: 1, day: 1, arm: arm)
+            create(:visit_group, position: 2, day: 8, arm: arm)
+            vg = build(:visit_group, position: 3, day: 4, arm: arm)
+            vg.save(validate: false)
+
+            vg.position = 2
+
+            expect(vg).to be_valid
+          end
+        end
+
+        context "result in out-of-order days" do
+          it "should be invalid" do
+            arm = Arm.create(subject_count: 1, visit_count: 1, name: "Arm1")
+            create(:visit_group, position: 1, day: 1, arm: arm)
+            create(:visit_group, position: 2, day: 8, arm: arm)
+            vg = create(:visit_group, position: 3, day: 16, arm: arm)
+
+            vg.position = 2
+
+            expect(vg).not_to be_valid
+          end
+        end
+      end
+
+      context "changing position towards the end" do
+        context "results in in-order days" do
+          it "should be valid" do
+            arm = Arm.create(subject_count: 1, visit_count: 1, name: "Arm1")
+            vg = create(:visit_group, position: 1, day: 4, arm: arm)
+            build(:visit_group, position: 2, day: 1, arm: arm).save(validate: false)
+            build(:visit_group, position: 3, day: 8, arm: arm)
+            vg.save(validate: false)
+
+            vg.position = 2
+
+            expect(vg).to be_valid
+          end
+        end
+
+        context "result in out-of-order days" do
+          it "should be invalid" do
+            arm = Arm.create(subject_count: 1, visit_count: 1, name: "Arm1")
+            vg = create(:visit_group, position: 1, day: 1, arm: arm)
+            create(:visit_group, position: 2, day: 8, arm: arm)
+            create(:visit_group, position: 3, day: 16, arm: arm)
+
+            vg.position = 2
+
+            expect(vg).not_to be_valid
+          end
+        end
+      end
+
+      context "adding visit as last" do
+        context "result in out-of-order days" do
+          it "should be invalid" do
+            arm = Arm.create(subject_count: 1, visit_count: 1, name: "Arm1")
+            create(:visit_group, position: 1, day: 1, arm: arm)
+            create(:visit_group, position: 2, day: 8, arm: arm)
+            vg = build(:visit_group, position: 3, day: 7, arm: arm)
+
+            expect(vg).not_to be_valid
+          end
+        end
       end
     end
   end
 
   context 'class methods' do
-
     describe '.per_page' do
-
       it 'should inherit from Visit' do
         expect(VisitGroup.per_page).to eq(Visit.per_page)
       end
     end
 
     describe '#delete' do
-
       it 'should not permanently delete the record' do
         visit_group = create(:visit_group_with_arm)
 
@@ -66,44 +161,29 @@ RSpec.describe VisitGroup, type: :model do
       end
     end
 
-    describe 'public' do
-
-      it 'should return correct insertion_name' do
-        vg = create(:visit_group_with_arm, name: 'some_name')
-        expect(vg.insertion_name).to eq("insert before " + vg.name)
-      end
-    end
-
     describe 'private' do
-
       before :each do
           @protocol = create(:protocol)
           @arm = create(:arm, protocol: @protocol)
           @arm.visit_groups.each{|vg| vg.destroy}
           @arm.reload
-          @vg_a        = create(:visit_group, name: 'A', position: 1, arm_id: @arm.id)
-          @vg_b        = create(:visit_group, name: 'B', position: 2, arm_id: @arm.id)
-          @vg_c        = create(:visit_group, name: 'C', position: 3, arm_id: @arm.id)
+          @vg_a        = create(:visit_group, name: 'A', position: 1, day: 2, arm_id: @arm.id)
+          @vg_b        = create(:visit_group, name: 'B', position: 2, day: 4, arm_id: @arm.id)
+          @vg_c        = create(:visit_group, name: 'C', position: 3, day: 6, arm_id: @arm.id)
           @participant = create(:participant, arm: @arm, protocol: @protocol)
-          @appointment = create(:appointment, visit_group: @vg_a, participant: @participant, name: @vg_a.name, arm_id: @vg_a.arm_id)
+          @appointment = create(:appointment, visit_group: @vg_a, participant: @participant, name: @vg_a.name, arm_id: @vg_a.arm_id, position: 1)
           @procedure   = create(:procedure, :complete, appointment: @appointment)
         end
 
       describe 'reorder' do
-
-        it 'should reorder_visit_groups_up when position is not nil' do
-          @vg_d = create(:visit_group, name: 'D', position: 3, arm_id: @arm.id)
+        it 'should reorder_visit_groups_up' do
+          @vg_d = create(:visit_group, name: 'D', position: 3, day: 5, arm_id: @arm.id)
           @vg_c.reload
           expect(@vg_c.position).to eq(4)
         end
 
-        it 'should not reorder_visit_groups_up when position is nil' do
-          @vg_d = create(:visit_group, name: 'D', arm_id: @arm.id)
-          expect(@vg_d.position).to eq(4)
-        end
-
         it 'should reorder_visit_groups_down' do
-          @vg_d = create(:visit_group, name: 'D', position: 3, arm_id: @arm.id)
+          @vg_d = create(:visit_group, name: 'D', position: 3, day: 5, arm_id: @arm.id)
           @vg_c.reload
           expect(@vg_c.position).to eq(4)
 
@@ -114,7 +194,6 @@ RSpec.describe VisitGroup, type: :model do
       end
 
       describe 'check for completed data' do
-
         it "should allow the appointment to be deleted if it is not completed" do
           @procedure.update_attributes(status: "unstarted")
           @vg_a.destroy

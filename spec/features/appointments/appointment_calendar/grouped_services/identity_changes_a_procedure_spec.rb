@@ -2,10 +2,12 @@ require 'rails_helper'
 
 feature 'Identity changes a Service', js: true do
 
-  let!(:protocol)     { create_and_assign_protocol_to_me }
-  let!(:participant)  { protocol.participants.first }
-  let!(:appointment)  { participant.appointments.first }
-  let!(:services)     { protocol.organization.inclusive_child_services(:per_participant) }
+  before :each do
+    @protocol     = create_and_assign_protocol_to_me
+    @participant  = @protocol.participants.first
+    @appointment  = @participant.appointments.first
+    @services     = @protocol.organization.inclusive_child_services(:per_participant)
+  end
 
   scenario 'and sees it join an existing group' do
     given_i_am_viewing_a_visit_with_one_procedure_group
@@ -53,13 +55,13 @@ feature 'Identity changes a Service', js: true do
 
   def given_i_am_viewing_a_visit_with_two_procedures_with_different_billing_types
     create(:procedure_insurance_billing_qty_with_notes,
-            appointment: appointment,
-            service: services.first,
+            appointment: @appointment,
+            service: @services.first,
             sparc_core_name: 'Core',
             sparc_core_id: 1)
     create(:procedure_research_billing_qty_with_notes,
-            appointment: appointment,
-            service: services.first,
+            appointment: @appointment,
+            service: @services.first,
             sparc_core_name: 'Core',
             sparc_core_id: 1)
 
@@ -68,8 +70,8 @@ feature 'Identity changes a Service', js: true do
 
   def given_i_am_viewing_a_visit_with_one_procedure_group
     create_list(:procedure_insurance_billing_qty_with_notes, 3,
-                appointment: appointment,
-                service: services.first,
+                appointment: @appointment,
+                service: @services.first,
                 sparc_core_name: 'Core',
                 sparc_core_id: 1)
 
@@ -77,15 +79,15 @@ feature 'Identity changes a Service', js: true do
   end
 
   def when_i_add_a_procedure
-    add_a_procedure services.first
+    add_a_procedure @services.first
   end
 
   def when_i_add_a_different_procedure
-    add_a_procedure services.last
+    add_a_procedure @services.last
   end
 
   def and_the_visit_has_one_ungrouped_procedure
-    add_a_procedure services.first
+    add_a_procedure @services.first
   end
 
   def when_i_change_one_procedure_billing_type_to_be_the_same_as_the_other
@@ -97,15 +99,14 @@ feature 'Identity changes a Service', js: true do
   end
 
   def when_i_move_all_procedures_out_of_the_group
-    @original_group_id = Procedure.first.group_id
-
-    within "tr.procedure-group[data-group-id='#{@original_group_id}']" do
-      find('button').click
-      wait_for_ajax
-    end
     Procedure.all.each do |procedure|
+      within "tr.procedure-group" do
+        find('button').click
+        wait_for_ajax
+      end
       within "tr.procedure[data-id='#{procedure.id}']" do
         bootstrap_select '.billing_type', 'R'
+        wait_for_ajax
       end
     end
   end
@@ -140,6 +141,10 @@ feature 'Identity changes a Service', js: true do
 
   def then_i_should_see_one_procedure_group
     expect(page).to have_css('tr.procedure-group', count: 1)
+    within "tr.procedure-group" do
+      find('button').click
+      wait_for_ajax
+    end
     expect(page).to have_css('tr.procedure', count: 2)
   end
 
