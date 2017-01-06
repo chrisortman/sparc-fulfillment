@@ -3,7 +3,7 @@
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
-server 'fulfillment-test.icts.uiowa.edu', user: 'capistrano', roles: %w{app db web}
+server 'fulfillment-dev.icts.uiowa.edu', user: 'capistrano', roles: %w{app db web}
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 
@@ -31,8 +31,8 @@ server 'fulfillment-test.icts.uiowa.edu', user: 'capistrano', roles: %w{app db w
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
-set :branch, 'test'
-set :rails_env, 'staging'
+set :branch, 'development'
+set :rails_env, 'develop'
 #set :rvm_ruby_version, '2.1.5@fulfillment-production --create'
 set :passenger_restart_with_touch, true
 #set :passenger_environment_variables, { :path => '/usr/local/rvm/gems/ruby-1.9.3-p286/bin:$PATH' }
