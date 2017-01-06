@@ -23,7 +23,7 @@ set :log_level, :info
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, fetch(:linked_files, []).push('app/assets/stylesheets/customize.sass', 'app/views/application/_header.html.haml', '.ruby-gemset','config/environments/develop.rb','config/database.yml', 'config/secrets.yml', 'config/faye.yml', 'config/shards.yml', '.env')
+set :linked_files, fetch(:linked_files, []).push('.ruby-gemset','config/database.yml', 'config/secrets.yml', 'config/faye.yml', 'config/shards.yml', '.env')
 
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'documents')

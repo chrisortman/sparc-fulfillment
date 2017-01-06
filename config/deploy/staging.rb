@@ -32,7 +32,7 @@ server 'fulfillment-test.icts.uiowa.edu', user: 'capistrano', roles: %w{app db w
 # Feel free to add new variables to customise your setup.
 
 set :branch, 'test'
-set :rails_env, 'staging'
+set :rails_env, 'production'
 #set :rvm_ruby_version, '2.1.5@fulfillment-production --create'
 set :passenger_restart_with_touch, true
 #set :passenger_environment_variables, { :path => '/usr/local/rvm/gems/ruby-1.9.3-p286/bin:$PATH' }
