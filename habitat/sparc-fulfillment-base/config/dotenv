@@ -1,0 +1,16 @@
+# This is where the package files are installed to
+export PKG_DIR="{{pkg.path}}"
+
+# This is where we will copy our application code to (under the release folder)
+export SERVICE_DIR="{{pkg.svc_static_path}}"
+
+export GEM_HOME="${SERVICE_DIR}/release/vendor/bundle/ruby/2.4.0"
+export GEM_PATH="{{pkgPathFor "chrisortman/ruby"}}/lib/ruby/gems/2.4.0:$GEM_HOME"
+export LD_LIBRARY_PATH="{{pkgPathFor "core/gcc-libs"}}/lib"
+
+export PATH="${SERVICE_DIR}/release/bin:{{pkgPathFor "core/node"}}/bin:$PATH"
+export RAILS_ENV="production"
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+export SHIBBOLETH_REQUEST_TYPE="{{cfg.shibboleth.request_type}}"

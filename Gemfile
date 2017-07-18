@@ -41,7 +41,7 @@ gem 'rest-client'
 gem 'sass-rails'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'sprockets-rails'
-gem 'therubyracer'
+gem 'execjs'
 gem 'thin'
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
@@ -86,4 +86,16 @@ group :test do
   gem 'timecop'
   gem 'webmock', '~> 1.20.4'
   gem 'vcr', '~> 2.9.3'
+end
+
+group :assets do
+  # We don't require this because we only have it so
+  # that we can run asset precompile during build without
+  # connecting to a database
+  # If we allow it to be required though it will screw up
+  # schema load / migrations because monkey patching.
+  # So what we do is not require it and then generate the
+  # require statement in the database.yml that we generate
+  # in the hab package build
+  gem "activerecord-nulldb-adapter", require: false
 end

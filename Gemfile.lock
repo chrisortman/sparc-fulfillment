@@ -32,6 +32,8 @@ GEM
       arel (~> 6.0)
     activerecord-import (0.8.0)
       activerecord (>= 3.0)
+    activerecord-nulldb-adapter (0.3.7)
+      activerecord (>= 2.0.0)
     activerecord-session_store (0.1.2)
       actionpack (>= 4.0.0, < 5)
       activerecord (>= 4.0.0, < 5)
@@ -67,7 +69,6 @@ GEM
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
     bootstrap-select-rails (1.6.3)
-    bootstrap-toggle-rails (2.2.1.0)
     bootstrap3-datetimepicker-rails (4.17.37)
       momentjs-rails (>= 2.8.1)
     builder (3.2.3)
@@ -88,15 +89,14 @@ GEM
       sshkit (~> 1.2)
     capistrano3-delayed-job (1.4.0)
       capistrano (>= 3.0.0)
-    capybara (2.13.0)
-      addressable
+    capybara (2.5.0)
       mime-types (>= 1.16)
-      nokogiri (>= 1.3.3)
+      nokogiri (>= 1.7.1)
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.14.0)
-      capybara (>= 2.3.0, < 2.14.0)
+    capybara-webkit (1.7.1)
+      capybara (>= 2.3.0, < 2.6.0)
       json
     choice (0.2.0)
     climate_control (0.0.3)
@@ -223,9 +223,6 @@ GEM
     json (1.8.6)
     launchy (2.4.3)
       addressable (~> 2.3)
-    letter_opener (1.4.1)
-      launchy (~> 2.2)
-    libv8 (3.16.14.15)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.4)
@@ -245,7 +242,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
     netrc (0.10.3)
-    nokogiri (1.7.2)
+    nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
@@ -275,7 +272,7 @@ GEM
       slop (~> 3.4)
     puma (2.11.3)
       rack (>= 1.1, < 2.0)
-    rack (1.6.8)
+    rack (1.6.5)
     rack-accept (0.4.5)
       rack (>= 0.4)
     rack-mini-profiler (0.10.1)
@@ -318,7 +315,6 @@ GEM
     rake (12.0.0)
     rdoc (4.2.0)
       json (~> 1.4)
-    ref (1.0.5)
     remotipart (1.2.1)
     request_store (1.1.0)
     responders (2.1.0)
@@ -389,9 +385,6 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    therubyracer (0.12.2)
-      libv8 (~> 3.16.14.0)
-      ref
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
@@ -426,8 +419,8 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     will_paginate (3.0.7)
-    xpath (2.1.0)
-      nokogiri (~> 1.3)
+    xpath (2.0.0)
+      nokogiri (~> 1.7.1)
     yajl-ruby (1.2.1)
 
 PLATFORMS
@@ -435,6 +428,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-import
+  activerecord-nulldb-adapter
   activerecord-session_store
   acts_as_list
   addressable
@@ -443,7 +437,6 @@ DEPENDENCIES
   axlsx_rails
   bootstrap-sass
   bootstrap-select-rails
-  bootstrap-toggle-rails
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   capistrano (~> 3.0)
   capistrano-passenger
@@ -458,6 +451,7 @@ DEPENDENCIES
   delayed_job_active_record
   devise
   dotenv-rails
+  execjs
   factory_girl_rails (~> 4.5.0)
   faker (~> 1.4.3)
   faye
@@ -469,7 +463,6 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
-  letter_opener
   momentjs-rails (>= 2.9.0)
   mysql2
   net-ldap
@@ -498,7 +491,6 @@ DEPENDENCIES
   spring
   spring-commands-rspec
   sprockets-rails
-  therubyracer
   thin
   timecop
   turbolinks
@@ -510,4 +502,4 @@ DEPENDENCIES
   yajl-ruby (~> 1.2.1)
 
 BUNDLED WITH
-   1.11.2
+   1.12.5
