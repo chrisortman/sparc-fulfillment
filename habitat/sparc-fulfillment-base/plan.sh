@@ -146,6 +146,18 @@ NULLDB
 
   fi
 
+  if [[ ! -e config/shards.yml ]]; then
+    echo "Copying default shards.yml for asset compilation"
+    cp config/shards.yml.example config/shards.yml
+    sed -e "s#development#production#" -i "config/shards.yml"
+  fi
+
+  if [[ ! -e config/faye.yml ]]; then
+    echo "Copying default faye.yml for asset compilation"
+    cp config/faye.yml.example config/faye.yml
+    sed -e "s#development#production#" -i "config/faye.yml"
+  fi
+
   if [[ ! -e .env ]]; then
     echo "Creating stub .env"
     cat << EOF > .env
@@ -172,6 +184,7 @@ LDAP_USER_DOMAIN=@uiowa.edu
 LDAP_AUTH_USERNAME='icts-nebula-svc'
 LDAP_AUTH_PASSWORD='n-@bh:Ai3#8x8'
 USE_EPIC=false
+SECRET_KEY_BASE=6e0367f990fa7854b1bf9592656989b26ac59e7b586d260383a7460448cbfd77dc00c8c5a83d03b9a37277e5fc3908d1d1ad86ac097b3f2ec4f150cecb4bef74
 EOF
 
   fi

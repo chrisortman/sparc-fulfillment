@@ -12,12 +12,14 @@ DOCUMENT_ROOT=documents
 INCLUDE_SHIBBOLETH_AUTHENTICATION=true
 USE_SHIBBOLETH_ONLY={{cfg.fulfillment.use_shibboleth_only}}
 INCLUDE_LDAP_AUTHENTICATION={{cfg.fulfillment.include_ldap_authentication}}
-LDAP_HOST=gc.iowa.uiowa.edu
-LDAP_PORT=3269
-LDAP_BASE='dc=iowa,dc=uiowa,dc=edu'
+LDAP_HOST={{cfg.ldap.host}}
+LDAP_PORT={{cfg.ldap.port}}
+LDAP_BASE={{cfg.ldap.base}}
 LDAP_ENCRYPTION=simple_tls
-LDAP_USER_DOMAIN=@uiowa.edu
+LDAP_USER_DOMAIN={{cfg.ldap.user_domain}}
 # for LDAP service accounts
-LDAP_AUTH_USERNAME='icts-nebula-svc'
-LDAP_AUTH_PASSWORD='n-@bh:Ai3#8x8'
+LDAP_AUTH_USERNAME='{{cfg.ldap.auth_username}}'
+LDAP_AUTH_PASSWORD='{{cfg.ldap.auth_password}}'
 USE_EPIC=false
+SECRET_KEY_BASE={{cfg.secret_key_base}}
+

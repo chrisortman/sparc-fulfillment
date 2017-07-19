@@ -1,0 +1,11 @@
+octopus:
+  environments:
+    - production
+  production:
+    sparc:
+      adapter: mysql2
+      username: sparc
+      password: cpras_qslmy_pass927x!
+      database: sparc_rails
+      host: i-cart.icts.uiowa.edu
+

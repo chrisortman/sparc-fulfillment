@@ -14,9 +14,6 @@ cp -a ${PKG_DIR}/static/release ${SERVICE_DIR}/release
 
 echo "Linking YAML files from {{pkg.svc_config_path}}"
 ln -sf {{pkg.svc_config_path}}/database.yml ${SERVICE_DIR}/release/config/database.yml
-ln -sf {{pkg.svc_config_path}}/application.yml ${SERVICE_DIR}/release/config/application.yml
-ln -sf {{pkg.svc_config_path}}/epic.yml ${SERVICE_DIR}/release/config/epic.yml
-ln -sf {{pkg.svc_config_path}}/ldap.yml ${SERVICE_DIR}/release/config/ldap.yml
 
 echo "Doing chown stuff on ${SERVICE_DIR}"
 chown -R {{pkg.svc_user}}:{{pkg.svc_group}} ${SERVICE_DIR}/release
@@ -28,9 +25,6 @@ exec 2>&1
 if [[ -e {{pkg.svc_data_path}}/migrate ]]; then
   echo "Running bootstrap task to initialize database"
   bin/rake sparc:bootstrap
-  echo "Running database data upgrades"
-  export HOME={{pkg.svc_data_path}}
-  script/upgrade/2_1_0-upgrade.sh
   rm {{pkg.svc_data_path}}/migrate
 fi
 
