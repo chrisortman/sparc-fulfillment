@@ -90,6 +90,7 @@ en:
     protocol_id: "Protocol ID"
     reason: "Reason"
     reset_visit: "Reset Visit"
+    service_error: 'Please choose the service that is desired to be added'
     srid: "SRID"
     start_date: "Start Date:"
     start_time: "Start Time:"
@@ -107,7 +108,9 @@ en:
     edit_arm: Edit Arm
     flash_messages:
       updated: "Arm Updated"
+    header: 'Clinical Services'
     name: "Arm Name"
+    name_with_arm_name_interpolated: 'Arm Name: %{arm_name}'
     not_deleted: "Protocols must have at least one arm. This arm cannot be deleted until another one is added"
     remove_arm: Remove Arm
     selected_line_items: "Selected Services"
@@ -164,6 +167,23 @@ en:
     view: "View Fulfillment Buttons"
     klok_description: "Imported via Klok"
 
+  imports:
+    klok_import: "Klok Import"
+    klok_import_info: "Click here to learn more about Klok"
+    file_select: "File Select:"
+    file_select_info: "requires *.xml file format"
+    proof_report: "Proof Report:"
+    import_klok_data: "Import Klok Data:"
+    browse: "Browse..."
+    proof_report_info: "Perform this first for data checking purposes"
+    import_klok_data_info: "This will run the Klok import which is IRREVERSIBLE"
+    date_time_formatter_ruby: "%m/%d/%Y %I:%M:%S %p"
+    title: "Title"
+    date_created: "Date Created"
+    file: "Attached File"
+    proof_report_submit: 'Proof Report'
+    klok_report_submit: 'Klok Report'
+
   multiple_procedures_modal:
     incomplete_header: "Incomplete Multiple Services"
     complete_header: "Complete Multiple Services"
@@ -174,20 +194,20 @@ en:
   line_item:
     object: "Line Item"
     account_number: "Account"
-    add_line_item_study: "Add Study Level Activity"
-    add_line_item_project: "Add Project Level Activity"
+    add_line_item_study: "Add Non-clinical Services"
+    add_line_item_project: "Add Non-clinical Services"
     change_service: "Change Service"
     components: "Components"
     contact: "Contact"
-    create: "Create New Study Level Activity"
-    create_project: "Create New Project Level Activity"
+    create: "Create New Non-clinical Service"
+    create_project: "Create New Non-clinical Service"
     delete_line_item: "Delete line item"
-    edit: "Edit Study Level Activity"
+    edit: "Edit Non-clinical Service"
     flash_messages:
-      created: "Study Level Activity Created"
-      deleted: "Study Level Activity Deleted"
-      not_deleted: "This Study Level Activity has Fulfillments. It cannot be deleted"
-      updated: "Study Level Activity Updated"
+      created: "Non-clinical Service Created"
+      deleted: "Non-clinical Service Deleted"
+      not_deleted: "This Non-clinical Service has Fulfillments. It cannot be deleted"
+      updated: "Non-clinical Service Updated"
     last_fulfillment: "Last Fulfillment"
     log_notes:
       quantity_requested: "Quantity Requested changed to "
@@ -204,6 +224,7 @@ en:
     logged_in_msg: "Logged in as"
     reports_link: 'All Reports'
     tasks_link: 'All Tasks'
+    imports_link: 'Imports'
 
   notes:
     object: "Note"
@@ -299,7 +320,7 @@ en:
     srid: "SRID"
     start_date: "Study Start Date"
     status: "Status"
-    study_cost: "Total Study Costs"
+    study_cost: "Total Cost"
     total_at_approval: "Cost at Approval"
     study_schedule_report: "Export"
     subsidy_amount: "Percent Subsidy"
@@ -319,15 +340,15 @@ en:
       remove_arm: "Remove Arm"
       remove_service: "Remove Service"
       remove_visit_group: "Remove Visit Group"
-      study_level_activities: "Study Level Activities"
+      study_level_activities: "Non-clinical Services"
     tabs:
       participant_list: "Participant List"
       participant_tracker: "Participant Tracker"
       reports: "Reports"
-      study_level_activities: "Study Level Activities"
-      project_level_activities: "Project Level Activities"
-      study_schedule: "Study Schedule"
-      project_schedule: "Project Schedule"
+      study_level_activities: "Non-clinical Services"
+      project_level_activities: "Non-clinical Services"
+      study_schedule: "Clinical Services"
+      project_schedule: "Clinical Services"
     udak_project_number: "UDAK Project #"
     updates: "Updates"
     back_to_top: 'Back to Top'
