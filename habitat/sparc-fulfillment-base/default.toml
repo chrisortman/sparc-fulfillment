@@ -34,7 +34,7 @@ faye_token = ""
 faye_host = ""
 use_shibboleth_only = false
 include_ldap_authentication = false
-
+use_indirect_cost = false
 [ldap]
 
 host = ""

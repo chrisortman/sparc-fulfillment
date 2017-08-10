@@ -21,5 +21,6 @@ LDAP_USER_DOMAIN={{cfg.ldap.user_domain}}
 LDAP_AUTH_USERNAME='{{cfg.ldap.auth_username}}'
 LDAP_AUTH_PASSWORD='{{cfg.ldap.auth_password}}'
 USE_EPIC=false
+USE_INDIRECT_COST={{cfg.fulfillment.use_indirect_cost}}
 SECRET_KEY_BASE={{cfg.secret_key_base}}
 
