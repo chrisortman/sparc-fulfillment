@@ -45,7 +45,6 @@ pkg_binds_optional=(
 pkg_exports=(
   [rails-port]=rails_port
 )
-pkg_exposes=(rails-port)
 
 # Callback Functions
 #
