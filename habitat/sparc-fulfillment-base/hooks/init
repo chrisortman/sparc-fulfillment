@@ -26,8 +26,10 @@ chmod +rx {{pkg.svc_static_path}}
 cd $RAILS_ROOT
 
 if [[ -e {{pkg.svc_data_path}}/migrate ]]; then
-  echo "Running bootstrap task to initialize database"
-  bin/rake sparc:bootstrap
+  echo "Ensuring database is created"
+  bin/rake db:create
+  echo "Ensuring database is migrated"
+  bin/rake db:migrate
 
   echo "Running database data upgrades"
   export HOME={{pkg.svc_data_path}}
