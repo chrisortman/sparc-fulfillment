@@ -3,6 +3,7 @@
 # Defines a single server with a list of roles and multiple properties.
 # You can define all roles on a single server, or split them:
 
+set :repo_url, 'ssh://git@git.its.uiowa.edu:7999/icts/sparc-fulfillment.git'
 server 'fulfillment.icts.uiowa.edu', user: 'capistrano', roles: %w{app db web}
 # server 'example.com', user: 'deploy', roles: %w{app web}, other_property: :other_value
 # server 'db.example.com', user: 'deploy', roles: %w{db}
