@@ -11,16 +11,14 @@ mkdir -pv {{pkg.svc_var_path}}/tmp
 mkdir -pv {{pkg.svc_var_path}}/tmp/pids
 mkdir -pv {{pkg.svc_data_path}}/system
 
-echo "Copying static assets"
+echo "Permissions for apache to serve file uploads"
+chmod 775 {{pkg.svc_data_path}}/system
+chmod +rx {{pkg.svc_data_path}}
+
+echo "Copying static assets to apache path"
 {{pkgPathFor "core/rsync"}}/bin/rsync -avhr -delete $RAILS_ROOT/public {{pkg.svc_static_path}}/release/
 
-echo "Linking YAML files from {{pkg.svc_config_path}}"
-ln -sf {{pkg.svc_config_path}}/database.yml ${SERVICE_DIR}/release/config/database.yml
-
-echo "Doing chown stuff on ${SERVICE_DIR}"
-chown -R {{pkg.svc_user}}:{{pkg.svc_group}} ${SERVICE_DIR}/release
-
-echo "Static asset permissions"
+echo "Permissions for apache to serve assets"
 chmod +rx {{pkg.svc_static_path}}/release/public
 chmod +rx {{pkg.svc_static_path}}/release
 chmod +rx {{pkg.svc_static_path}}

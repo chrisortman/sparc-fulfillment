@@ -12,9 +12,12 @@ pkg_deps=(
   core/libxslt
   core/libyaml
   core/libevent #event machine ?
+  core/openssl
+  core/gcc-libs
   core/node
   core/mysql-client
   core/rsync
+  core/zlib
 
   core/ruby/2.4.2
   core/bundler
@@ -40,7 +43,6 @@ pkg_binds_optional=(
 pkg_exports=(
   [rails-port]=rails_port
 )
-pkg_exposes=(rails-port)
 # Callback Functions
 #
 do_begin() {
@@ -81,6 +83,11 @@ do_prepare() {
 
   build_line "Setting link for /usr/bin/env to 'coreutils'"
   [[ ! -f /usr/bin/env ]] && ln -s "$(pkg_path_for coreutils)/bin/env" /usr/bin/env
+
+  # Need to make sure we can find bundler when we run rails / rake commands later
+  export GEM_PATH="$(pkg_path_for "core/bundler"):$GEM_PATH"
+  export LD_LIBRARY_PATH="$(pkg_path_for "core/gcc-libs"):$(pkg_path_for "core/libevent")"
+
   return 0
 }
 
@@ -99,10 +106,12 @@ do_build() {
   # the build), so specify it as an env var instead
   export NOKOGIRI_CONFIG="--use-system-libraries --with-zlib-dir=${_zlib_dir} --with-xslt-dir=${_libxslt_dir} --with-xml2-include=${_libxml2_dir}/include/libxml2 --with-xml2-lib=${_libxml2_dir}/lib"
 
+  export EVENTMACHINE_CONFIG="--with-ssl-dir=${_openssl_include_dir}"
   # we control the variable above, and it will be all on one line, and
   # we need single quotes otherwise the extconf doesn't build the
   # extension.
   bundle config build.nokogiri '${NOKOGIRI_CONFIG}'
+  bundle config build.eventmachine '${EVENTMACHINE_CONFIG}'
 
   # We need to add tzinfo-data to the Gemfile since we're not in an
   # environment that has this from the OS
@@ -127,7 +136,7 @@ do_build() {
      cp -a $HAB_CACHE_SRC_PATH/bundle_cache vendor/bundle
    fi
 
-  bundle install --without test development deploy --jobs 2 --retry 5 --path vendor/bundle --binstubs --no-clean
+  bundle install --without test development deploy --jobs 2 --retry 5 --path vendor/bundle --binstubs
 
   # cp -R vendor/bundle $HAB_CACHE_SRC_PATH/bundle_cache
   # Some bundle files when they install have permissions that don't
