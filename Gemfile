@@ -35,6 +35,7 @@ gem 'paper_trail', '~> 4.0.0.beta'
 gem 'paranoia', '~> 2.0'
 gem 'progress_bar'
 gem 'puma'
+gem 'thin' #for faye
 gem 'rails', '4.2.8'
 gem 'remotipart'
 gem 'rest-client'

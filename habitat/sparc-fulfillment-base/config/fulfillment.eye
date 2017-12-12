@@ -2,6 +2,8 @@ RAILS_ROOT = ENV["RAILS_ROOT"] || File.expand_path(File.dirname(__FILE__) + "/..
 RAILS_ENV = ENV["RAILS_ENV"] || "development"
 RAILS_PORT = ENV["RAILS_PORT"] || "4000"
 
+FAYE_PORT = ENV["FAYE_PORT"] || "9292"
+
 WORKERS_COUNT=1
 
 Eye.application 'fulfillment' do
@@ -25,6 +27,26 @@ Eye.application 'fulfillment' do
 
       # ensure the CPU is below 30% at least 3 out of the last 5 times checked
       check :cpu, every: 30, below: 80, times: 3
+    end
+
+    process :faye do
+      opts = [
+        '-l log/fulfillment_faye_thin.log',
+        "-p #{FAYE_PORT}",
+        "-P tmp/pids/fulfillment_faye_thin.pid",
+        '-d',
+        '-R thin.ru',
+        "--tag fulfillment_faye_thin",
+        '-t 30',
+        "-e #{RAILS_ENV}",
+        "-c #{RAILS_ROOT}",
+        '-a 127.0.0.1'
+      ]
+      pid_file "tmp/pids/fulfillment_faye_thin.pid"
+      start_command "bin/thin start #{opts * ' '}"
+      stop_signals [:QUIT, 2.seconds, :TERM, 1.seconds, :KILL]
+      stdall 'log/fulfillment_faye.stdall.log'
+
     end
   end
 
