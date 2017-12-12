@@ -4,8 +4,18 @@ octopus:
   production:
     sparc:
       adapter: mysql2
-      username: sparc
-      password: cpras_qslmy_pass927x!
-      database: sparc_rails
-      host: i-cart.icts.uiowa.edu
+      database: {{cfg.database_name}}
+{{#if bind.database.first}}
+  {{#with bind.database.first as |db|}}
+      username: root
+      password:
+      host: {{db.sys.ip}}
+      port: {{db.cfg.port}}
+  {{/with}}
+{{else}}
+      username: {{cfg.database_username}}
+      password: {{cfg.database_password}}
+      host: {{cfg.database_host}}
+      port: {{cfg.database_port}}
+{{/if}}
 
