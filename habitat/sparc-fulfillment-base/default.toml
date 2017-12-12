@@ -4,7 +4,7 @@
 rails_binding_ip = "0.0.0.0"
 rails_port = 3000
 
-database_name = "sparc_rails"
+database_name = "sparc_fulfillment"
 database_username = "root"
 
 # It's up to the end user to set a password for their database, we
@@ -45,4 +45,10 @@ user_domain = ""
 auth_username = ""
 auth_password = ""
 
+[sparc]
 
+database_name = "sparc_rails"
+database_username = "root"
+database_password = "root"
+database_host = "33.33.33.1"
+database_port = 3306

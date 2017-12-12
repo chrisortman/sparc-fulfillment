@@ -4,18 +4,9 @@ octopus:
   production:
     sparc:
       adapter: mysql2
-      database: {{cfg.database_name}}
-{{#if bind.database.first}}
-  {{#with bind.database.first as |db|}}
-      username: root
-      password:
-      host: {{db.sys.ip}}
-      port: {{db.cfg.port}}
-  {{/with}}
-{{else}}
-      username: {{cfg.database_username}}
-      password: {{cfg.database_password}}
-      host: {{cfg.database_host}}
-      port: {{cfg.database_port}}
-{{/if}}
+      database: {{cfg.sparc.database_name}}
+      username: {{cfg.sparc.database_username}}
+      password: {{cfg.sparc.database_password}}
+      host: {{cfg.sparc.database_host}}
+      port: {{cfg.sparc.database_port}}
 
