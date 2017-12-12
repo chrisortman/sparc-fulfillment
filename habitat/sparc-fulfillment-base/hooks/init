@@ -5,12 +5,14 @@ set -e
 
 . {{pkg.svc_config_path}}/dotenv
 
-echo "Removing previous version deployed at ${SERVICE_DIR}"
-rm -rf ${SERVICE_DIR}/release
+echo "Creating symlinked directories"
+mkdir -pv {{pkg.svc_var_path}}/log
+mkdir -pv {{pkg.svc_var_path}}/tmp
+mkdir -pv {{pkg.svc_var_path}}/tmp/pids
+mkdir -pv {{pkg.svc_data_path}}/system
 
-echo "Deploying new version from ${PKG_DIR}/static/release to ${SERVICE_DIR}/release"
-cp -a ${PKG_DIR}/static/release ${SERVICE_DIR}/release
-
+echo "Copying static assets"
+{{pkgPathFor "core/rsync"}}/bin/rsync -avhr -delete $RAILS_ROOT/public {{pkg.svc_static_path}}/release/
 
 echo "Linking YAML files from {{pkg.svc_config_path}}"
 ln -sf {{pkg.svc_config_path}}/database.yml ${SERVICE_DIR}/release/config/database.yml
@@ -18,13 +20,21 @@ ln -sf {{pkg.svc_config_path}}/database.yml ${SERVICE_DIR}/release/config/databa
 echo "Doing chown stuff on ${SERVICE_DIR}"
 chown -R {{pkg.svc_user}}:{{pkg.svc_group}} ${SERVICE_DIR}/release
 
-cd ${SERVICE_DIR}/release
+echo "Static asset permissions"
+chmod +rx {{pkg.svc_static_path}}/release/public
+chmod +rx {{pkg.svc_static_path}}/release
+chmod +rx {{pkg.svc_static_path}}
 
-exec 2>&1
+cd $RAILS_ROOT
 
 if [[ -e {{pkg.svc_data_path}}/migrate ]]; then
   echo "Running bootstrap task to initialize database"
   bin/rake sparc:bootstrap
+
+  echo "Running database data upgrades"
+  export HOME={{pkg.svc_data_path}}
+  script/upgrade/{{strReplace pkg.version "." "_"}}-upgrade.sh
+
   rm {{pkg.svc_data_path}}/migrate
 fi
 

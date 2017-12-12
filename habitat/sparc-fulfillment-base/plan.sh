@@ -3,35 +3,30 @@
 
 pkg_name=sparc-fulfillment
 pkg_origin=chrisortman
-pkg_version="2.4.0"
+pkg_version="2.5.5"
 pkg_source="https://github.com/ui-icts/sparc-fulfillment/archive/${pkg_name}-${pkg_version}.tar.bz2"
 # Overwritten later because we compute it based on the repo
 pkg_shasum="TODO"
 pkg_deps=(
-  core/runit # Maybe not needed, thought i had to use it to get chpst
-  core/cacerts
-  core/glibc
-  core/gcc-libs # event machine
-  core/libffi
   core/libxml2
   core/libxslt
   core/libyaml
-  core/openssl #event machine ?
   core/libevent #event machine ?
   core/node
   core/mysql-client
+  core/rsync
 
-  chrisortman/ruby/2.1.5
+  core/ruby/2.4.2
+  core/bundler
+  chrisortman/eye
   )
 pkg_build_deps=(
   core/coreutils
   core/git
-  core/rsync
   core/gcc
   core/make
-  core/curl
-  core/zlib
   core/which
+  core/cacerts
 )
 pkg_bin_dirs=(bin)
 pkg_lib_dirs=(lib)
@@ -121,11 +116,18 @@ do_build() {
      echo 'gem "rb-readline"' >> Gemfile
    fi
 
-   # if [[ -e $HAB_CACHE_SRC_PATH/bundle_cache ]]; then
-   #   cp -R $HAB_CACHE_SRC_PATH/bundle_cache vendor/bundle
-   # fi
+   ####### ZOOM ######
+   # If you want to speed up your habitat package build
+   # while you're dev'ing do this after your first run
+   # in the studio
+   # cp -a /hab/cache/src/sparc-fulfillment-$pkg_version/vendor/bundle /hab/cache/src/bundle_cache
+   # but you'll probably have to put the pkg version in there
+   if [[ -e $HAB_CACHE_SRC_PATH/bundle_cache ]]; then
+     echo "Restoring cached bundle install"
+     cp -a $HAB_CACHE_SRC_PATH/bundle_cache vendor/bundle
+   fi
 
-  bundle install --without test development deploy --jobs 2 --retry 5 --path vendor/bundle --binstubs
+  bundle install --without test development deploy --jobs 2 --retry 5 --path vendor/bundle --binstubs --no-clean
 
   # cp -R vendor/bundle $HAB_CACHE_SRC_PATH/bundle_cache
   # Some bundle files when they install have permissions that don't
@@ -189,6 +191,9 @@ EOF
   fi
   RAILS_ENV=production bin/rake assets:precompile
 
+  rm config/shards.yml
+  rm config/faye.yml
+  rm .env
 }
 
 # The default implementation runs nothing during post-compile. An example of a
@@ -247,8 +252,27 @@ do_install() {
   fi
 
   chmod +x ${pkg_prefix}/static/release/script/upgrade/*.sh
+  create_symlinks
 }
 
+create_symlinks() {
+  rm -rfv ${pkg_prefix}/static/release/log
+  rm -rfv ${pkg_prefix}/static/release/tmp
+  rm -rfv ${pkg_prefix}/static/release/public/system
+  rm -rfv ${pkg_prefix}/static/release/config/database.yml
+  rm -rfv ${pkg_prefix}/static/release/config/faye.yml
+  rm -rfv ${pkg_prefix}/static/release/config/shards.yml
+  rm -rfv ${pkg_prefix}/static/release/.env
+
+  ln -sfv ${pkg_svc_var_path}/log ${pkg_prefix}/static/release/log
+  ln -sfv ${pkg_svc_var_path}/tmp ${pkg_prefix}/static/release/tmp
+  ln -sfv ${pkg_svc_data_path}/system ${pkg_prefix}/static/release/public/system
+
+  ln -sfv ${pkg_svc_config_path}/database.yml ${pkg_prefix}/static/release/config/database.yml
+  ln -sfv ${pkg_svc_config_path}/faye.yml ${pkg_prefix}/static/release/config/faye.yml
+  ln -sfv ${pkg_svc_config_path}/shards.yml ${pkg_prefix}/static/release/config/shards.yml
+  ln -sfv ${pkg_svc_config_path}/appenv ${pkg_prefix}/static/release/.env
+}
 # The default implementation is to strip any binaries in $pkg_prefix of their
 # debugging symbols. You should override this behavior if you want to change
 # how the binaries are stripped, which additional binaries located in

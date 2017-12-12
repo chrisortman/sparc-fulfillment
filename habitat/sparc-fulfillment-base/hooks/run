@@ -1,6 +1,6 @@
-#!/bin/sh
+#!{{pkgPathFor "core/busybox-static"}}/bin/bash
+
+. /hab/svc/sparc-fulfillment/config/dotenv
 
 exec 2>&1
-
-echo "Startin sleep phase for sparc-fulfillment"
-exec sleep infinity
+exec {{pkgPathFor "chrisortman/eye"}}/bin/leye load -f
