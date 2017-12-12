@@ -42,7 +42,6 @@ gem 'sass-rails'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'sprockets-rails'
 gem 'execjs'
-gem 'puma'
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
 gem 'underscore-rails', '~> 1.8.3'
