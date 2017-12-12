@@ -35,7 +35,7 @@ Eye.application 'fulfillment' do
         "-p #{FAYE_PORT}",
         "-P tmp/pids/fulfillment_faye_thin.pid",
         '-d',
-        '-R thin.ru',
+        '-R faye.ru',
         "--tag fulfillment_faye_thin",
         '-t 30',
         "-e #{RAILS_ENV}",
