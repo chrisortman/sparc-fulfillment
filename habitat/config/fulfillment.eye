@@ -1,4 +1,4 @@
-RAILS_ROOT = ENV["RAILS_ROOT"] || File.expand_path(File.dirname(__FILE__) + "/../../../")
+RAILS_ROOT = ENV["RAILS_ROOT"] || File.expand_path(File.dirname(__FILE__) + "/../../")
 RAILS_ENV = ENV["RAILS_ENV"] || "development"
 RAILS_PORT = ENV["RAILS_PORT"] || "4000"
 
@@ -7,7 +7,7 @@ FAYE_PORT = ENV["FAYE_PORT"] || "9292"
 WORKERS_COUNT=1
 
 Eye.application 'fulfillment' do
-  env ENV.to_h
+  env ({"PORT" => RAILS_PORT }.merge(ENV))
   working_dir RAILS_ROOT
 #  env 'APP_ENV' => 'production' # global env for each processes
   trigger :flapping, times: 10, within: 1.minute, retry_in: 10.minutes
