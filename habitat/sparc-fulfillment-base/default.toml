@@ -2,7 +2,7 @@
 # See the docs at https//www.habitat.sh/docs/create-packages-configure/.
 # You can safely delete this file if you don't need it.
 rails_binding_ip = "0.0.0.0"
-rails_port = 3000
+rails_port = 4000
 
 database_name = "sparc_fulfillment"
 database_username = "root"
@@ -27,7 +27,7 @@ secret_key_base = "6e0367f990fa7854b1bf9592656989b26ac59e7b586d260383a7460448cbf
 
 [fulfillment]
 scheme = "https"
-sparc_api_host = "rsmt-dev.icts.uiowa.edu"
+sparc_api_host = "localhost:3001"
 sparc_api_username = ""
 sparc_api_password = ""
 faye_token = ""
