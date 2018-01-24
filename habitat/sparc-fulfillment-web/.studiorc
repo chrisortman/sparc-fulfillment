@@ -1,1 +1,0 @@
-export PATH=$PATH:$(hab pkg path core/curl)/bin:$(hab pkg path core/which)/bin:$(hab pkg path core/node)/bin:$(hab pkg path chrisortman/ruby)/bin:$(hab pkg path core/runit)/bin
