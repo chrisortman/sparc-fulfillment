@@ -54,7 +54,7 @@ do_download() {
 
   # This is a way of getting the git code that I found in the chef plan
   build_line "Fake download! Creating archive of latest repository commit from $PLAN_CONTEXT"
-  cd $PLAN_CONTEXT/../..
+  cd $PLAN_CONTEXT/..
   git archive --prefix=${pkg_name}-${pkg_version}/ --output=$HAB_CACHE_SRC_PATH/${pkg_filename} HEAD
 
   pkg_shasum=$(trim $(sha256sum $HAB_CACHE_SRC_PATH/${pkg_filename} | cut -d " " -f 1))
