@@ -10,6 +10,7 @@ mkdir -pv {{pkg.svc_var_path}}/log
 mkdir -pv {{pkg.svc_var_path}}/tmp
 mkdir -pv {{pkg.svc_var_path}}/tmp/pids
 mkdir -pv {{pkg.svc_data_path}}/system
+mkdir -pv {{pkg.svc_data_path}}/documents
 
 echo "Permissions for apache to serve file uploads"
 chmod 775 {{pkg.svc_data_path}}/system
