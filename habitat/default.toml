@@ -1,0 +1,54 @@
+# Use this file to templatize your application's native configuration files.
+# See the docs at https//www.habitat.sh/docs/create-packages-configure/.
+# You can safely delete this file if you don't need it.
+rails_binding_ip = "0.0.0.0"
+rails_port = 4000
+
+database_name = "sparc_fulfillment"
+database_username = "root"
+
+# It's up to the end user to set a password for their database, we
+# don't want to assume a default that can lead to insecure database
+# servers running in the wild.
+database_password = "root"
+
+# Normally you should use named service binding to bind the "database"
+# name to the database service group, and this app will connect to the
+# leader of that service group. If you do not use binding, this app
+# will fall back to using the database host specified here (localhost).
+# We recommend that this only be used for testing purposes.
+database_host = "33.33.33.1"
+
+# It's highly unlikely anyone would want to change this from the
+# default, right? but it's configurable. Just in case.
+database_port = 3306
+
+secret_key_base = "6e0367f990fa7854b1bf9592656989b26ac59e7b586d260383a7460448cbfd77dc00c8c5a83d03b9a37277e5fc3908d1d1ad86ac097b3f2ec4f150cecb4bef74"
+
+[fulfillment]
+scheme = "https"
+sparc_api_host = "localhost:3001"
+sparc_api_username = ""
+sparc_api_password = ""
+faye_token = ""
+faye_host = ""
+use_shibboleth_only = false
+include_ldap_authentication = false
+use_indirect_cost = false
+
+[ldap]
+host = ""
+port = ""
+base = ""
+user_domain = ""
+
+auth_username = ""
+auth_password = ""
+
+[sparc]
+
+database_name = "sparc_rails"
+database_username = "root"
+database_password = "root"
+database_host = "33.33.33.1"
+database_port = 3306

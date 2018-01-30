@@ -1,0 +1,23 @@
+---
+pid: tmp/pids/fulfillment_faye_thin.pid
+timeout: 30
+wait: 30
+log: log/fulfillment_faye_thin.log
+max_conns: 1024
+port: 9292
+# environment must be set to production in all environments!
+environment: production
+max_persistent_conns: 512
+servers: 1
+threaded: true
+no-epoll: true
+daemonize: true
+ssl: false
+##ssl-key-file: /etc/pki/tls/private/obis-sparc-dev.mdc.musc.edu.key
+##ssl-cert-file: /etc/pki/tls/certs/one_cert.crt
+#ssl-key-file: /etc/pki/tls/private/fulfillment-test.icts.uiowa.edu.key
+#ssl-cert-file: /etc/pki/tls/certs/fulfillment-test.icts.uiowa.edu-chain.crt
+#ssl-disable-verify: true
+chdir: /var/www/html/sparc/fulfillment/current
+tag: fulfillment_faye_thin
+rackup: faye.ru

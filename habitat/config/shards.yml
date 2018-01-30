@@ -1,0 +1,12 @@
+octopus:
+  environments:
+    - production
+  production:
+    sparc:
+      adapter: mysql2
+      database: {{cfg.sparc.database_name}}
+      username: {{cfg.sparc.database_username}}
+      password: {{cfg.sparc.database_password}}
+      host: {{cfg.sparc.database_host}}
+      port: {{cfg.sparc.database_port}}
+

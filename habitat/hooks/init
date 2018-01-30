@@ -1,0 +1,41 @@
+#!/bin/sh
+
+set -o nounset
+set -e
+
+. {{pkg.svc_config_path}}/dotenv
+
+echo "Creating symlinked directories"
+mkdir -pv {{pkg.svc_var_path}}/log
+mkdir -pv {{pkg.svc_var_path}}/tmp
+mkdir -pv {{pkg.svc_var_path}}/tmp/pids
+mkdir -pv {{pkg.svc_data_path}}/system
+mkdir -pv {{pkg.svc_data_path}}/documents
+
+echo "Permissions for apache to serve file uploads"
+chmod 775 {{pkg.svc_data_path}}/system
+chmod +rx {{pkg.svc_data_path}}
+
+echo "Copying static assets to apache path"
+{{pkgPathFor "core/rsync"}}/bin/rsync -avhr -delete $RAILS_ROOT/public {{pkg.svc_static_path}}/release/
+
+echo "Permissions for apache to serve assets"
+chmod +rx {{pkg.svc_static_path}}/release/public
+chmod +rx {{pkg.svc_static_path}}/release
+chmod +rx {{pkg.svc_static_path}}
+
+cd $RAILS_ROOT
+
+if [[ -e {{pkg.svc_data_path}}/migrate ]]; then
+  echo "Ensuring database is created"
+  bin/rake db:create
+  echo "Ensuring database is migrated"
+  bin/rake db:migrate
+
+  echo "Running database data upgrades"
+  export HOME={{pkg.svc_data_path}}
+  script/upgrade/{{strReplace pkg.version "." "_"}}-upgrade.sh
+
+  rm {{pkg.svc_data_path}}/migrate
+fi
+

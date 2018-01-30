@@ -27,7 +27,7 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'letter_opener'
 gem 'momentjs-rails', '>= 2.9.0'
-gem 'mysql2'
+gem 'mysql2', '~> 0.4'
 gem 'net-ldap'
 gem 'omniauth'
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
@@ -35,19 +35,20 @@ gem 'paper_trail', '~> 4.0.0.beta'
 gem 'paranoia', '~> 2.0'
 gem 'progress_bar'
 gem 'puma'
+gem 'thin' #for faye
 gem 'rails', '4.2.8'
 gem 'remotipart'
 gem 'rest-client'
 gem 'sass-rails'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'sprockets-rails'
-gem 'therubyracer'
-gem 'thin'
+gem 'execjs'
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
 gem 'underscore-rails', '~> 1.8.3'
 gem 'will_paginate'
-gem 'yajl-ruby', '~> 1.2.1', require: 'yajl'
+gem 'yajl-ruby', '~> 1.3.1', require: 'yajl'
+gem 'rails_12factor', group: :production
 
 group :deploy do
   gem 'capistrano', '~> 3.0'
@@ -85,4 +86,16 @@ group :test do
   gem 'timecop'
   gem 'webmock', '~> 1.20.4'
   gem 'vcr', '~> 2.9.3'
+end
+
+group :assets do
+  # We don't require this because we only have it so
+  # that we can run asset precompile during build without
+  # connecting to a database
+  # If we allow it to be required though it will screw up
+  # schema load / migrations because monkey patching.
+  # So what we do is not require it and then generate the
+  # require statement in the database.yml that we generate
+  # in the hab package build
+  gem "activerecord-nulldb-adapter", require: false
 end
