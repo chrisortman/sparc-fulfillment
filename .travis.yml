@@ -1,28 +1,28 @@
-sudo: false
-language: ruby
-
 addons:
   apt:
     packages:
-      - libqtwebkit-dev
-      - libqtwebkit4
-
+    - libqtwebkit-dev
+    - libqtwebkit4
 before_install:
-  - mkdir -p /home/travis/.hab/cache/keys
-  - mkdir build_logs
-  - cp chrisortman-20160618040827.pub /home/travis/.hab/cache/keys
+- mkdir -p /home/travis/.hab/cache/keys
+- mkdir build_logs
+- cp chrisortman-20160618040827.pub /home/travis/.hab/cache/keys
+- openssl aes-256-cbc -K $encrypted_afb1c7396efd_key -iv $encrypted_afb1c7396efd_iv
+  -in chrisortman-20160618040827.sig.key.enc -out chrisortman-20160618040827.sig.key
+  -d
 install:
-  - curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh
+- curl https://raw.githubusercontent.com/habitat-sh/habitat/master/components/hab/install.sh
   | sudo bash
 script:
-  - hab studio -r /hab/studio/sparc build -R habitat > build_logs/sparc_fulfillment.log
-  - travis_wait hab pkg upload results/*.hart
+- hab studio -r /hab/studio/sparc build -R habitat > build_logs/sparc_fulfillment.log
+- travis_wait hab pkg upload results/*.hart
 after_success:
-  - cat build_logs/sparc_fulfillment.log
+- cat build_logs/sparc_fulfillment.log
 after_failure:
-  - cat build_logs/sparc_fulfillment.log
+- cat build_logs/sparc_fulfillment.log
 env:
   global:
-    - HAB_ORIGIN=chrisortman
-    - HAB_ORIGIN_KEYS=chrisortman
-    - HAB_NONINTERACTIVE=true
+  - HAB_ORIGIN=chrisortman
+  - HAB_ORIGIN_KEYS=chrisortman
+  - HAB_NONINTERACTIVE=true
+  - secure: ooqzKGfrtIeKXbaeUVjpH7T3VC1cO3RQjVB4MUERKgQ6MwK8wbsMzyfJT5lTDV/eEr10cHI6ban//Ofrqaoyn6a3WriUnr2UpRhesBuuBi8HBM7u2CFr5fLRFc9A/PVMfBPXFzheQcPVeNVCxc920CFl6VKxuIXkapkJ+vXJJKZ7CNNNvttfYw9sda53tz2i3i/2s4lkNOL+hTIrNt1ms2SKNkYq5wBdvLOm35ZXa6voQb11YZ8He3IM5ZdpuST1p6CQHUJfoTpJV6zChXaXE2F2mj+k3w9UXGUa9wdpAGtALQrSHAFUinNBdhrpqkxeSQNrMok2mFbiAfE156oR5MAaTgtAlJuS3kmX827Qd6R781W2t025f+tppXmJi0XxKRmkIbyGGjUn00IVCxF2suH6tctagWWP9djRjwutibO//2ev11pm8aQzArDxLuQu7i+TpcpnDTI45q4NbG8mwP1bfYEfDpUBVN+mzT4VYC4TAIf27i9aqs7RQJOExX5LkYysleKVJNoWJK3EQLyBvpVDE/OegXQU+etrp4levVHQTrujJMiKC5wuKHGPpUC2IurrPb8IhyZGmh+Iisios9kXpQrBpmjqmBRMjMURKIbFySXz7iv7cZa0sUvZ4CT52/s86QYZ3ALK8ibvW4C/4MObKmAJaVteaiwgEZbg4Lg=
