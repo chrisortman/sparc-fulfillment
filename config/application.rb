@@ -18,7 +18,7 @@
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR~
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.~
 
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
@@ -40,6 +40,8 @@ module ClinicalWorkFulfillment
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.time_zone = ENV.fetch('APPLICATION_TIME_ZONE')
+
+    config.eager_load_paths << Rails.root.join('lib')
 
     config.paths.add File.join('app', 'jobs'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'jobs', '*')]

@@ -18,7 +18,7 @@
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR~
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.~
 
-class Note < ActiveRecord::Base
+class Note < ApplicationRecord
 
   KIND_TYPES    = %w(log note reason followup).freeze
 
@@ -33,6 +33,12 @@ class Note < ActiveRecord::Base
   validates :reason, presence: true, if: Proc.new { |note| ((note.notable_type == 'Procedure') || (note.notable_type == 'Appointment')) && note.kind == 'reason' }
   validates_inclusion_of :reason, in: Proc.new { |note| note.notable_type.constantize::NOTABLE_REASONS },
                                   if: Proc.new { |note| note.reason.present? }
+
+  # required so that custom appointment notes will show. up.  taken from the rails documentation, http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html#label-Polymorphic+Associations
+
+  def notable_type=(class_name)
+    super(class_name.constantize.base_class.to_s)
+  end
 
   def comment
     case kind

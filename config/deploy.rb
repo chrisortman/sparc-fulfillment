@@ -1,6 +1,6 @@
 # Copyright © 2011-2017 MUSC Foundation for Research Development~
 # config valid only for current version of Capistrano
-lock '3.4.0'
+lock '3.10.1'
 
 set :application, 'fulfillment'
 set :repo_url, 'ssh://git@git.its.uiowa.edu:7999/icts/sparc-fulfillment.git'
@@ -11,8 +11,8 @@ set :repo_url, 'ssh://git@git.its.uiowa.edu:7999/icts/sparc-fulfillment.git'
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, '/var/www/html/sparc/fulfillment'
 
-# Default value for :scm is :git
-set :scm, :git
+# Default value for :scm is :git - Depreciation notice from capistrano
+#set :scm, :git
 
 # Default value for :format is :pretty
 # set :format, :pretty
