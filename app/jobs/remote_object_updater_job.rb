@@ -73,4 +73,8 @@ class RemoteObjectUpdaterJob < ActiveJob::Base
     Protocol.set_callback    :save, :after, :update_faye
     Participant.set_callback :save, :after, :update_faye
   end
+
+  def update_faye(object)
+    FayeJob.perform_later object
+  end
 end
