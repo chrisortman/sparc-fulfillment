@@ -36,6 +36,10 @@ class ReportJob < ActiveJob::Base
   end
 
   rescue_from(StandardError) do |error|
+    logger.error "!!!!! Error generating report !!!!!"
+    logger.error error.message
+    logger.error error.backtrace.join("\n")
+
     arguments.first.update_attributes state: 'Error', stack_trace: "#{error.message}\n\n#{error.backtrace.join("\n\t")}"
     FayeJob.perform_later arguments.first
   end

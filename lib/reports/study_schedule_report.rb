@@ -78,6 +78,14 @@ class StudyScheduleReport < Report
     end
 
     p.serialize(document.path)
+
+    # I don't know, randomly this will finish and 
+    # there is no document generated. But if you rerun it with the same
+    # document then it will be created...we're going to have a soft retry here
+    unless File.exist?(document.path)
+      Rails.logger.info "File didn't exist after generating report, retrying"
+      p.serialize(document.path)
+    end
   end
 
   def service_rows(arm)
