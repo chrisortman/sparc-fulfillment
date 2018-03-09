@@ -175,7 +175,7 @@ class StudyScheduleReport < Report
   end
 
   def maximum_visit_count
-    @protocol.arms.map(&:visit_count).max
+    @protocol.arms.map(&:visit_count).max || 0
   end
 
   def spacer_array(count)
