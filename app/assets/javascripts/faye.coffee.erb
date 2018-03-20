@@ -22,7 +22,12 @@ $ ->
   unless <%= Rails.env.test? %>
     host    = "<%= ENV.fetch('CWF_FAYE_HOST') %>"
     scheme  = "<%= ENV.fetch('GLOBAL_SCHEME') %>"
+    <% if Rails.env.development? %>
     faye    = new Faye.Client("#{scheme}://#{host}/faye")
+    <% else %>
+    faye    = new Faye.Client("/faye")
+    <% end %>
+
 
     faye.disable('websocket')
 
