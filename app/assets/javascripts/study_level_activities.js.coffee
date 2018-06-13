@@ -1,4 +1,4 @@
-# Copyright © 2011-2017 MUSC Foundation for Research Development~
+# Copyright © 2011-2018 MUSC Foundation for Research Development~
 # All rights reserved.~
 
 # Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:~
@@ -20,6 +20,7 @@
 
 $ ->
 
+  allowSubmit = true
   # Line Item Bindings
 
   $(document).on 'click', ".otf_service_new", ->
@@ -67,6 +68,7 @@ $ ->
   # Fulfillment Bindings
 
   $(document).on 'click', '.otf_fulfillment_new', ->
+    allowSubmit = true
     line_item_id = $(this).data('line-item-id')
     data = line_item_id: line_item_id
     $.ajax
@@ -83,8 +85,20 @@ $ ->
       data: "line_item_id" : line_item_id
 
   $(document).on 'click', '.otf_fulfillment_edit', ->
+    allowSubmit = true
     row_index   = $(this).parents("tr").data("index")
     fulfillment_id = $(this).parents("#fulfillments-table").bootstrapTable("getData")[row_index].id
     $.ajax
       type: 'GET'
       url: "/fulfillments/#{fulfillment_id}/edit"
+
+  $(document).on 'click', '.add_fulfillment', (e)->
+    e.preventDefault()
+    if allowSubmit
+      $('.fulfillment-form').submit()
+      allowSubmit = false
+    else
+      return false
+
+  $(document).on 'click', '#date_fulfilled_field, #fulfillment_quantity', ->
+    allowSubmit = true

@@ -1,4 +1,4 @@
-# Copyright © 2011-2017 MUSC Foundation for Research Development~
+# Copyright © 2011-2018 MUSC Foundation for Research Development~
 # All rights reserved.~
 
 # Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:~
@@ -23,7 +23,6 @@ class Import < ApplicationRecord
   has_attached_file :file
   validates_attachment :file, content_type: { content_type: 'text/plain' }
   has_attached_file :xml_file
-  validates_attachment :xml_file, content_type: { content_type: 'text/xml' }
 
 
   def generate(file, proof_report)
