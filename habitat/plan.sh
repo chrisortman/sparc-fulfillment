@@ -3,7 +3,7 @@
 
 pkg_name=sparc-fulfillment
 pkg_origin=chrisortman
-pkg_version="2.7.0"
+pkg_version="2.7.5"
 pkg_source="https://github.com/ui-icts/sparc-fulfillment/archive/${pkg_name}-${pkg_version}.tar.bz2"
 # Overwritten later because we compute it based on the repo
 pkg_shasum="TODO"
