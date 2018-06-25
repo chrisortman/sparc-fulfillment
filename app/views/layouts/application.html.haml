@@ -31,6 +31,10 @@
     = csrf_meta_tags
     = include_gon
   %body{class: body_class}
+    - if ENV.key?('SITE_NAME') && !ENV['SITE_NAME'].blank?
+      .alert.alert-danger
+        %p.text-center{:style => 'letter-spacing: 8px'}
+          = ENV['SITE_NAME']
     .container-fluid
       .row.header= render "header"
       .row.nav= render "nav"
