@@ -25,6 +25,11 @@ database_port = 3306
 
 secret_key_base = "6e0367f990fa7854b1bf9592656989b26ac59e7b586d260383a7460448cbfd77dc00c8c5a83d03b9a37277e5fc3908d1d1ad86ac097b3f2ec4f150cecb4bef74"
 
+# Displays a banner at the top of the site.
+# Useful for test environments so that users
+# do not mistake it for production
+site_banner = ""
+
 [fulfillment]
 scheme = "https"
 sparc_api_host = "localhost:3001"

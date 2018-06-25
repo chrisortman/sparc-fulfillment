@@ -23,4 +23,6 @@ LDAP_AUTH_PASSWORD='{{cfg.ldap.auth_password}}'
 USE_EPIC=false
 USE_INDIRECT_COST={{cfg.fulfillment.use_indirect_cost}}
 SECRET_KEY_BASE={{cfg.secret_key_base}}
-
+{{#if cfg.site_banner ~}}
+SITE_NAME='{{cfg.site_banner}}'
+{{/if}}
