@@ -20,7 +20,6 @@ pkg_deps=(
   core/zlib
 
   core/ruby/2.4.2
-  core/bundler
   chrisortman/eye
   )
 pkg_build_deps=(
@@ -84,8 +83,6 @@ do_prepare() {
   build_line "Setting link for /usr/bin/env to 'coreutils'"
   [[ ! -f /usr/bin/env ]] && ln -s "$(pkg_path_for coreutils)/bin/env" /usr/bin/env
 
-  # Need to make sure we can find bundler when we run rails / rake commands later
-  export GEM_PATH="$(pkg_path_for "core/bundler"):$GEM_PATH"
   export LD_LIBRARY_PATH="$(pkg_path_for "core/gcc-libs"):$(pkg_path_for "core/libevent")"
 
   return 0
@@ -98,9 +95,6 @@ do_build() {
   local _libxslt_dir=$(pkg_path_for libxslt)
   local _zlib_dir=$(pkg_path_for zlib)
   local _openssl_include_dir=$(pkg_path_for openssl)
-
-  #export GEM_HOME=${pkg_prefix}/vendor/bundle
-  #export GEM_PATH=${GEM_HOME}
 
   # don't let bundler split up the nokogiri config string (it breaks
   # the build), so specify it as an env var instead
