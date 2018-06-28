@@ -35,6 +35,7 @@ def faye_log
     "log/fulfillment_faye.stdall.log"
   end
 end
+
 WORKERS_COUNT=1
 
 Eye.application 'fulfillment' do

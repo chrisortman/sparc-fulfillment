@@ -29,6 +29,7 @@ secret_key_base = "6e0367f990fa7854b1bf9592656989b26ac59e7b586d260383a7460448cbf
 # Useful for test environments so that users
 # do not mistake it for production
 site_banner = ""
+use_syslog = false
 
 [fulfillment]
 scheme = "https"

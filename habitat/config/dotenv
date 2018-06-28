@@ -21,3 +21,7 @@ if [ -n "{{cfg.ssl_cert_file}}" ]
 then
   export SSL_CERT_FILE="{{cfg.ssl_cert_file}}"
 fi
+
+{{#if cfg.use_syslog ~}}
+RAILS_LOG_TO_SYSLOG='{{cfg.use_syslog}}'
+{{/if}}
