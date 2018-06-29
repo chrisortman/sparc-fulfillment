@@ -1,4 +1,5 @@
 # This is where the package files are installed to
+export HOME={{pkg.svc_var_path}}/home
 export RAILS_ROOT="{{pkg.path}}/static/release"
 
 export TZ="America/Chicago"

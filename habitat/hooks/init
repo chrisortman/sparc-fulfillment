@@ -27,7 +27,6 @@ chmod +rx {{pkg.svc_static_path}}
 cd $RAILS_ROOT
 
 if [[ -e {{pkg.svc_data_path}}/migrate ]]; then
-  export HOME={{pkg.svc_data_path}}
   echo "Ensuring database is created"
   bin/rake db:create
   echo "Ensuring database is migrated"
