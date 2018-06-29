@@ -5,6 +5,10 @@ set -e
 
 . {{pkg.svc_config_path}}/dotenv
 
+echo "Creating runtime directories"
+mkdir -pv $HOME
+mkdir -pv $EYE_HOME
+
 echo "Creating symlinked directories"
 mkdir -pv {{pkg.svc_var_path}}/log
 mkdir -pv {{pkg.svc_var_path}}/tmp
