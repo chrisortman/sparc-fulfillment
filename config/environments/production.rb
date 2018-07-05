@@ -109,7 +109,7 @@ Rails.application.configure do
 
   if ENV['RAILS_LOG_TO_SYSLOG'].present? && ENV['RAILS_LOG_TO_SYSLOG'] == 'true'
     require 'syslog/logger'
-    logger = ActiveSupport::Logger.new(Syslog::Logger.new 'sparc-fulfillment')
+    logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'sparc-fulfillment')
     logger.formatter = ::Logger::Formatter.new
     config.logger = logger
   end
