@@ -32,12 +32,12 @@ cd $RAILS_ROOT
 
 if [[ -e {{pkg.svc_data_path}}/migrate ]]; then
   echo "Ensuring database is created"
-  bin/rake db:create
+  RAILS_LOG_TO_SYSLOG=false bin/rake db:create
   echo "Ensuring database is migrated"
-  bin/rake db:migrate
+  RAILS_LOG_TO_SYSLOG=false bin/rake db:migrate
 
   echo "Running database data upgrades"
-  script/upgrade/{{strReplace pkg.version "." "_"}}-upgrade.sh
+  RAILS_LOG_TO_SYSLOG=false script/upgrade/{{strReplace pkg.version "." "_"}}-upgrade.sh
 
   rm {{pkg.svc_data_path}}/migrate
 fi
