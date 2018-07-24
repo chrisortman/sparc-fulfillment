@@ -27,6 +27,7 @@ class Document < ApplicationRecord
   validates :title, presence: true
   
   def path
+    raise "Cannot generate path for a document that has not been saved (#{self.title})" if self.id.blank?
     [ENV.fetch('DOCUMENTS_FOLDER'), id].join('/')
   end
 
