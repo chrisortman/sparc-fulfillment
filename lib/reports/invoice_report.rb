@@ -92,7 +92,8 @@ class InvoiceReport < Report
             "Quantity Type",
             "Research Rate",
             "Total Cost",
-            protocol.sub_service_request.subsidy ? "Percent Subsidy" : ""
+            protocol.sub_service_request.subsidy ? "Percent Subsidy" : "",
+            "MFK"
           ]
 
           fulfillments.includes(:line_item, service: [:organization]).order("organizations.name, line_items.quantity_type, fulfilled_at").each do |fulfillment|
@@ -117,7 +118,8 @@ class InvoiceReport < Report
               fulfillment.line_item.quantity_type,
               display_cost(fulfillment.service_cost),
               display_cost(fulfillment.total_cost),
-              display_subsidy_percent(protocol)
+              display_subsidy_percent(protocol),
+              protocol.udak_project_number
             ]
 
             total += fulfillment.total_cost
@@ -150,7 +152,8 @@ class InvoiceReport < Report
             "Clinical Quantity Type",
             "Research Rate",
             "Total Cost",
-            protocol.sub_service_request.subsidy ? "Percent Subsidy" : ""
+            protocol.sub_service_request.subsidy ? "Percent Subsidy" : "",
+            "MFK"
           ]
 
           procedures.group_by{|procedure| procedure.service.organization}.each do |org, org_group|
@@ -184,7 +187,8 @@ class InvoiceReport < Report
                     procedure.service.current_effective_pricing_map.unit_type,
                     display_cost(procedure.service_cost),
                     display_cost(service_group.size * procedure.service_cost.to_f),
-                    display_subsidy_percent(protocol)
+                    display_subsidy_percent(protocol),
+                    protocol.udak_project_number
                   ]
                   service_cost = service_group.size * procedure.service_cost.to_f
                   total += service_cost
