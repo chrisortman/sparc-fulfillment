@@ -101,11 +101,20 @@ class Protocol < ApplicationRecord
   end
 
   def pi
-    project_roles.where(role: "primary-pi").first.identity
+
+    if project_roles.loaded?
+      project_roles.to_a.find{ |pr| pr.role == 'primary-pi'}.identity
+    else
+      project_roles.where(role: "primary-pi").first.identity
+    end
   end
 
   def coordinators
-    project_roles.where(role: "research-assistant-coordinator").map(&:identity)
+    if project_roles.loaded?
+      project_roles.select{ |pr| pr.role == "research-assistant-coordinator"}.map(&:identity)
+    else
+      project_roles.where(role: "research-assistant-coordinator").map(&:identity)
+    end
   end
 
   def short_title_with_sparc_id
@@ -125,7 +134,11 @@ class Protocol < ApplicationRecord
   end
 
   def billing_business_managers
-    project_roles.where(role: "business-grants-manager").map(&:identity)
+    if project_roles.loaded?
+      project_roles.select{ |pr| pr.role == "business-grants-manager"}.map(&:identity)
+    else
+      project_roles.where(role: "business-grants-manager").map(&:identity)
+    end
   end
 
   def research_master_id

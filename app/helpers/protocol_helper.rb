@@ -63,7 +63,9 @@ module ProtocolHelper
   end
 
   def formatted_owner protocol
-    if protocol.owner.present?
+    if protocol.try(:sub_service_request).try(:owner).present?
+      protocol.sub_service_request.owner.full_name
+    elsif protocol.owner.present?
       protocol.owner.full_name
     else
       '-'
@@ -71,8 +73,11 @@ module ProtocolHelper
   end
 
   def formatted_requester protocol
-    if protocol.sub_service_request.present? && protocol.sub_service_request.service_request.present? && protocol.service_requester.present?
-      protocol.service_requester.full_name
+
+    service_requester = protocol.service_requester
+
+    if service_requester.present? && protocol.sub_service_request.service_request.present?
+      service_requester.full_name
     else
       '-'
     end
