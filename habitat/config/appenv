@@ -34,7 +34,7 @@ SITE_NAME='{{cfg.site_banner}}'
   {{#if @last ~}}"{{/if ~}}
 {{else}}
 # No memcache servers defined
-{{/eachAlive ~}}
+{{/eachAlive}}
 
 {{#if cfg.default_home_columns ~}}
 DEFAULT_HOME_COLUMNS='{{cfg.default_home_columns}}'
