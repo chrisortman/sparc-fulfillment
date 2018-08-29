@@ -26,3 +26,12 @@ fi
 {{#if cfg.use_syslog ~}}
 export RAILS_LOG_TO_SYSLOG='{{cfg.use_syslog}}'
 {{/if}}
+
+{{#eachAlive bind.memcache.members as |member| ~}}
+  {{#if @first ~}}export MEMCACHE_SERVERS="{{/if ~}}
+  {{member.sys.ip}}:{{member.cfg.port ~}}
+  {{#unless @last ~}},{{/unless ~}}
+  {{#if @last ~}}"{{/if ~}}
+{{else}}
+# No memcache servers defined
+{{/eachAlive ~}}

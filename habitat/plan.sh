@@ -38,6 +38,7 @@ pkg_svc_group="$pkg_svc_user"
 
 pkg_binds_optional=(
   [database]="port host"
+  [memcache]="port"
 )
 pkg_exports=(
   [rails-port]=rails_port
