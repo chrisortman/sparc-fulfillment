@@ -26,3 +26,18 @@ SECRET_KEY_BASE={{cfg.secret_key_base}}
 {{#if cfg.site_banner ~}}
 SITE_NAME='{{cfg.site_banner}}'
 {{/if}}
+
+{{#eachAlive bind.memcache.members as |member| ~}}
+  {{#if @first ~}}MEMCACHE_SERVERS="{{/if ~}}
+  {{member.sys.ip}}:{{member.cfg.port ~}}
+  {{#unless @last ~}},{{/unless ~}}
+  {{#if @last ~}}"{{/if ~}}
+{{else}}
+# No memcache servers defined
+{{/eachAlive ~}}
+
+{{#if cfg.default_home_columns ~}}
+DEFAULT_HOME_COLUMNS='{{cfg.default_home_columns}}'
+{{else}}
+# No Default Home Columns
+{{/if}}

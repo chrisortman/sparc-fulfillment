@@ -130,4 +130,14 @@ module ProtocolHelper
 
     line_items
   end
+
+  def script_column_commands(commands)
+    return "" if commands.blank?
+
+    raw(
+      commands.map do |c|
+      "$('#protocol-list').bootstrapTable('#{c.command}Column', '#{c.name}');"
+      end.join
+    )
+  end
 end

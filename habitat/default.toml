@@ -31,6 +31,8 @@ secret_key_base = "6e0367f990fa7854b1bf9592656989b26ac59e7b586d260383a7460448cbf
 site_banner = ""
 use_syslog = false
 
+default_home_columns = ""
+
 [fulfillment]
 scheme = "https"
 sparc_api_host = "localhost:3001"

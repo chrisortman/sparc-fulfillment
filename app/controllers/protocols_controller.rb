@@ -25,9 +25,19 @@ class ProtocolsController < ApplicationController
 
   respond_to :json, :html
 
+  ColumnCommand = Struct.new(:command, :name)
+
   def index
     respond_to do |format|
-      format.html { render }
+      format.html {
+        unless ENV['DEFAULT_HOME_COLUMNS'].blank?
+          @column_commands = ENV['DEFAULT_HOME_COLUMNS'].split(',').map do |i|
+            command, name = i.split(':')
+            ColumnCommand.new(command, name)
+          end
+        end
+        render
+      }
       format.json do
         @protocols = current_identity.protocols
 
