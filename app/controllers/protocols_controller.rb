@@ -29,12 +29,13 @@ class ProtocolsController < ApplicationController
 
   def index
     respond_to do |format|
+
       format.html {
-        unless ENV['DEFAULT_HOME_COLUMNS'].blank?
-          @column_commands = ENV['DEFAULT_HOME_COLUMNS'].split(',').map do |i|
-            command, name = i.split(':')
-            ColumnCommand.new(command, name)
-          end
+        if cookies["protocols.bs.table.columns"].blank? && !ENV['DEFAULT_HOME_COLUMNS'].blank?
+          cookies["protocols.bs.table.columns"] = {
+            :value => ENV['DEFAULT_HOME_COLUMNS'].split(',').to_json,
+            :expires => 2.hours.from_now
+          }
         end
         render
       }
