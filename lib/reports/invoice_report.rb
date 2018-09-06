@@ -67,8 +67,6 @@ class InvoiceReport < Report
         total = 0
         total_with_subsidy = 0
 
-        sparc_protocol = Sparc::Protocol.find(protocol.id)
-
         fulfillments = protocol.fulfillments.fulfilled_in_date_range(@start_date, @end_date)
         procedures = protocol.procedures.completed_r_in_date_range(@start_date, @end_date)
 
@@ -121,7 +119,7 @@ class InvoiceReport < Report
               display_cost(fulfillment.service_cost),
               display_cost(fulfillment.total_cost),
               display_subsidy_percent(protocol),
-              sparc_protocol.try(:udak_project_number)
+              protocol.sparc_protocol.try(:udak_project_number)
             ]
 
             total += fulfillment.total_cost
@@ -190,7 +188,7 @@ class InvoiceReport < Report
                     display_cost(procedure.service_cost),
                     display_cost(service_group.size * procedure.service_cost.to_f),
                     display_subsidy_percent(protocol),
-                    sparc_protocol.try(:udak_project_number)
+                    protocol.sparc_protocol.try(:udak_project_number)
                   ]
                   service_cost = service_group.size * procedure.service_cost.to_f
                   total += service_cost
