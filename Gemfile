@@ -21,7 +21,7 @@ gem 'dotenv-rails'
 gem 'rails-erd'
 gem 'faye'
 gem 'gon'
-gem 'grape', '~> 0.9.0'
+gem 'grape', '~> 1.1.0'
 gem 'haml-rails'
 gem 'hashie-forbidden_attributes'
 gem 'jquery-rails'
@@ -41,7 +41,7 @@ gem 'remotipart'
 gem 'rest-client'
 gem 'rubyzip', '>= 1.2.1'
 gem 'sass-rails'
-gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'sdoc', '~> 1.0.0', group: :doc
 gem 'sprockets-rails'
 gem 'execjs'
 gem 'thin'
@@ -53,7 +53,7 @@ gem 'yajl-ruby', require: 'yajl'
 gem 'rails_12factor', group: :production
 gem 'dalli'
 group :deploy do
-  gem 'capistrano', '~> 3.0'
+  gem 'capistrano', '~> 3.11'
   gem 'capistrano-rvm'
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-passenger'
@@ -62,7 +62,7 @@ end
 
 
 group :development, :test, :testing do
-  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'factory_girl_rails', '~> 4.9.0'
   gem 'faker', '~> 1.4.3'
   gem 'pry'
   gem 'byebug'

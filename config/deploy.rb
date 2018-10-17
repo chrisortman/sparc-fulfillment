@@ -1,6 +1,6 @@
 # Copyright © 2011-2018 MUSC Foundation for Research Development~
 # config valid only for current version of Capistrano
-lock '3.10.1'
+lock '3.11.0'
 
 set :application, 'fulfillment'
 set :repo_url, 'ssh://git@git.its.uiowa.edu:7999/icts/sparc-fulfillment.git'
