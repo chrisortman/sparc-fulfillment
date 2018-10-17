@@ -3,7 +3,7 @@
 
 pkg_name=sparc-fulfillment
 pkg_origin=chrisortman
-pkg_version="2.7.5"
+pkg_version="2.8.0"
 pkg_source="https://github.com/ui-icts/sparc-fulfillment/archive/${pkg_name}-${pkg_version}.tar.bz2"
 # Overwritten later because we compute it based on the repo
 pkg_shasum="TODO"
@@ -19,7 +19,7 @@ pkg_deps=(
   core/rsync
   core/zlib
 
-  core/ruby/2.4.2
+  core/ruby
   chrisortman/eye
   )
 pkg_build_deps=(
