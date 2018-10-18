@@ -19,7 +19,7 @@ pkg_deps=(
   core/rsync
   core/zlib
 
-  core/ruby
+  core/ruby24
   chrisortman/eye
   )
 pkg_build_deps=(
