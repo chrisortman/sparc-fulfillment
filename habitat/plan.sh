@@ -20,7 +20,7 @@ pkg_deps=(
   core/zlib
 
   core/ruby24
-  chrisortman/eye
+  chrisortman/eye/0.9.4
   )
 pkg_build_deps=(
   core/coreutils
