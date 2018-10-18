@@ -28,7 +28,6 @@ class ProtocolsController < ApplicationController
   ColumnCommand = Struct.new(:command, :name)
 
   def index
-    respond_to do |format|
     @page = params[:page]
     @status = params[:status] || 'all'
     @offset = params[:offset] || 0
@@ -38,10 +37,12 @@ class ProtocolsController < ApplicationController
     respond_to do |format|
       format.html {
         if cookies["protocols.bs.table.columns"].blank? && !ENV['DEFAULT_HOME_COLUMNS'].blank?
+
           cookies["protocols.bs.table.columns"] = {
             :value => ENV['DEFAULT_HOME_COLUMNS'].split(',').to_json,
             :expires => 2.hours.from_now
           }
+
         end
         render
       }
