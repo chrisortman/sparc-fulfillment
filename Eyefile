@@ -1,9 +1,7 @@
-RAILS_ROOT = ENV["RAILS_ROOT"] || File.expand_path(File.dirname(__FILE__) + "/../../")
-RAILS_ENV = ENV["RAILS_ENV"] || "development"
+RAILS_ROOT = ENV["RAILS_ROOT"] || File.expand_path(File.dirname(__FILE__))
+RAILS_ENV  = ENV["RAILS_ENV"] || "development"
 RAILS_PORT = ENV["RAILS_PORT"] || "4000"
-
-FAYE_PORT = ENV["FAYE_PORT"] || "9292"
-
+FAYE_PORT  = ENV["FAYE_PORT"] || "9292"
 USE_SYSLOG = ENV['RAILS_LOG_TO_SYSLOG'].present?
 
 if USE_SYSLOG

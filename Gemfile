@@ -103,3 +103,5 @@ group :assets do
   # in the hab package build
   gem "activerecord-nulldb-adapter", require: false
 end
+
+gem 'eye', '~> 0.9.4', :group  => [:production, :development]

@@ -19,8 +19,8 @@ pkg_deps=(
   core/rsync
   core/zlib
 
-  core/ruby24
-  chrisortman/eye/0.9.4
+  core/ruby/2.4.2
+  core/bundler
   )
 pkg_build_deps=(
   core/coreutils
@@ -84,7 +84,10 @@ do_prepare() {
   build_line "Setting link for /usr/bin/env to 'coreutils'"
   [[ ! -f /usr/bin/env ]] && ln -s "$(pkg_path_for coreutils)/bin/env" /usr/bin/env
 
-  export LD_LIBRARY_PATH="$(pkg_path_for "core/gcc-libs"):$(pkg_path_for "core/libevent")"
+  export LD_LIBRARY_PATH="$(pkg_path_for "core/gcc-libs"):$(pkg_path_for "core/libevent"):$LD_LIBRARY_PATH"
+
+  # Need to make sure we can find bundler when we run rails / rake commands later
+  export GEM_PATH="$(pkg_path_for "core/bundler"):$GEM_PATH"
 
   return 0
 }
@@ -131,7 +134,7 @@ do_build() {
      cp -a $HAB_CACHE_SRC_PATH/bundle_cache vendor/bundle
    fi
 
-  bundle install --without test development deploy --jobs 2 --retry 5 --path vendor/bundle --binstubs
+  bundle install --without test development deploy --jobs 2 --retry 5 --path vendor/bundle --no-binstubs
 
   # cp -R vendor/bundle $HAB_CACHE_SRC_PATH/bundle_cache
   # Some bundle files when they install have permissions that don't
