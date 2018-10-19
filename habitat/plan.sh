@@ -20,7 +20,6 @@ pkg_deps=(
   core/zlib
 
   core/ruby/2.4.2
-  core/bundler
   )
 pkg_build_deps=(
   core/coreutils
@@ -85,9 +84,6 @@ do_prepare() {
   [[ ! -f /usr/bin/env ]] && ln -s "$(pkg_path_for coreutils)/bin/env" /usr/bin/env
 
   export LD_LIBRARY_PATH="$(pkg_path_for "core/gcc-libs"):$(pkg_path_for "core/libevent"):$LD_LIBRARY_PATH"
-
-  # Need to make sure we can find bundler when we run rails / rake commands later
-  export GEM_PATH="$(pkg_path_for "core/bundler"):$GEM_PATH"
 
   return 0
 }
