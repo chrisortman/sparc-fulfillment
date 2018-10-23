@@ -3,4 +3,4 @@
 . /hab/svc/sparc-fulfillment/config/dotenv
 
 exec 2>&1
-exec leye load -f
+exec bin/leye load -f
