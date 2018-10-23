@@ -1,4 +1,4 @@
-RAILS_ROOT = ENV["RAILS_ROOT"] || File.expand_path(File.dirname(__FILE__))
+RAILS_ROOT = ENV["RAILS_ROOT"] || File.expand_path(File.dirname(__FILE__) + "/../../")
 RAILS_ENV  = ENV["RAILS_ENV"] || "development"
 RAILS_PORT = ENV["RAILS_PORT"] || "4000"
 FAYE_PORT  = ENV["FAYE_PORT"] || "9292"

@@ -20,6 +20,7 @@ pkg_deps=(
   core/zlib
 
   core/ruby/2.4.2
+  chrisortman/eye
   )
 pkg_build_deps=(
   core/coreutils
@@ -106,7 +107,6 @@ do_build() {
   # extension.
   bundle config build.nokogiri '${NOKOGIRI_CONFIG}'
   bundle config build.eventmachine '${EVENTMACHINE_CONFIG}'
-  bundle config build.eye '--with-cppflags=-fgnu89-inline'
 
   # We need to add tzinfo-data to the Gemfile since we're not in an
   # environment that has this from the OS
@@ -246,10 +246,6 @@ do_install() {
     [[ -f $binstub ]] && sed -e "s#/usr/bin/env ruby#$(pkg_path_for ruby)/bin/ruby#" -i "$binstub"
   done
   for binstub in ${pkg_prefix}/static/release/script/*; do
-    build_line "Setting shebang for ${binstub} to 'ruby'"
-    [[ -f $binstub ]] && sed -e "s#/usr/bin/env ruby#$(pkg_path_for ruby)/bin/ruby#" -i "$binstub"
-  done
-  for binstub in ${pkg_prefix}/static/release/vendor/bundle/ruby/2.4.0/bin/*; do
     build_line "Setting shebang for ${binstub} to 'ruby'"
     [[ -f $binstub ]] && sed -e "s#/usr/bin/env ruby#$(pkg_path_for ruby)/bin/ruby#" -i "$binstub"
   done
