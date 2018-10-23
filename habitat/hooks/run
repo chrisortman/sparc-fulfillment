@@ -3,4 +3,4 @@
 . /hab/svc/sparc-fulfillment/config/dotenv
 
 exec 2>&1
-exec bin/leye load -f
+exec $GEM_HOME/bin/leye load -f
