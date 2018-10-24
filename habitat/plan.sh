@@ -84,8 +84,6 @@ do_prepare() {
   build_line "Setting link for /usr/bin/env to 'coreutils'"
   [[ ! -f /usr/bin/env ]] && ln -s "$(pkg_path_for coreutils)/bin/env" /usr/bin/env
 
-  export LD_LIBRARY_PATH="$(pkg_path_for "core/gcc-libs"):$(pkg_path_for "core/libevent"):$LD_LIBRARY_PATH"
-
   return 0
 }
 
