@@ -4,7 +4,7 @@ export RAILS_ROOT="{{pkg.path}}/static/release"
 
 export TZ="America/Chicago"
 export GEM_HOME="$RAILS_ROOT/vendor/bundle/ruby/2.4.0"
-export GEM_PATH="$GEM_HOME:{{pkgPathFor "core/ruby"}}/lib/ruby/gems/2.4.0:{{pkgPathFor "core/bundler"}}"
+export GEM_PATH="$GEM_HOME:{{pkgPathFor "core/ruby24"}}/lib/ruby/gems/2.4.0:{{pkgPathFor "core/bundler"}}"
 export LD_LIBRARY_PATH="{{pkgPathFor "core/gcc-libs"}}/lib:{{pkgPathFor "core/libevent"}}"
 export PATH="$RAILS_ROOT/bin:{{pkgPathFor "core/node"}}/bin:{{pkgPathFor "chrisortman/eye"}}/bin:$PATH"
 
