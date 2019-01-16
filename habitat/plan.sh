@@ -241,11 +241,11 @@ do_install() {
   # just need to do?
   for binstub in ${pkg_prefix}/static/release/bin/*; do
     build_line "Setting shebang for ${binstub} to 'ruby'"
-    [[ -f $binstub ]] && sed -e "s#/usr/bin/env ruby#$(pkg_path_for ruby)/bin/ruby#" -i "$binstub"
+    [[ -f $binstub ]] && sed -e "s#/usr/bin/env ruby#$(pkg_path_for ruby24)/bin/ruby#" -i "$binstub"
   done
   for binstub in ${pkg_prefix}/static/release/script/*; do
     build_line "Setting shebang for ${binstub} to 'ruby'"
-    [[ -f $binstub ]] && sed -e "s#/usr/bin/env ruby#$(pkg_path_for ruby)/bin/ruby#" -i "$binstub"
+    [[ -f $binstub ]] && sed -e "s#/usr/bin/env ruby#$(pkg_path_for ruby24)/bin/ruby#" -i "$binstub"
   done
 
   if [[ $(readlink /usr/bin/env) = "$(pkg_path_for coreutils)/bin/env" ]]; then
