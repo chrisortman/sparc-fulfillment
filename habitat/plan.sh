@@ -149,10 +149,10 @@ NULLDB
 
   fi
 
-  if [[ ! -e config/shards.yml ]]; then
-    echo "Copying default shards.yml for asset compilation"
-    cp config/shards.yml.example config/shards.yml
-    sed -e "s#development#production#" -i "config/shards.yml"
+  if [[ ! -e config/sparc_db.yml ]]; then
+    echo "Copying default sparc_db.yml for asset compilation"
+    cp config/sparc_db.yml.example config/sparc_db.yml
+    sed -e "s#development#production#" -i "config/sparc_db.yml"
   fi
 
   if [[ ! -e config/faye.yml ]]; then
@@ -193,7 +193,7 @@ EOF
   fi
   RAILS_ENV=production bin/rake assets:precompile
 
-  rm config/shards.yml
+  rm config/sparc_db.yml
   rm config/faye.yml
   rm .env
 }
@@ -264,7 +264,7 @@ create_symlinks() {
   rm -rfv ${pkg_prefix}/static/release/public/system
   rm -rfv ${pkg_prefix}/static/release/config/database.yml
   rm -rfv ${pkg_prefix}/static/release/config/faye.yml
-  rm -rfv ${pkg_prefix}/static/release/config/shards.yml
+  rm -rfv ${pkg_prefix}/static/release/config/sparc_db.yml
   rm -rfv ${pkg_prefix}/static/release/.env
 
   ln -sfv ${pkg_svc_var_path}/log ${pkg_prefix}/static/release/log
@@ -274,7 +274,7 @@ create_symlinks() {
 
   ln -sfv ${pkg_svc_config_path}/database.yml ${pkg_prefix}/static/release/config/database.yml
   ln -sfv ${pkg_svc_config_path}/faye.yml ${pkg_prefix}/static/release/config/faye.yml
-  ln -sfv ${pkg_svc_config_path}/shards.yml ${pkg_prefix}/static/release/config/shards.yml
+  ln -sfv ${pkg_svc_config_path}/sparc_db.yml ${pkg_prefix}/static/release/config/sparc_db.yml
   ln -sfv ${pkg_svc_config_path}/appenv ${pkg_prefix}/static/release/.env
 }
 # The default implementation is to strip any binaries in $pkg_prefix of their

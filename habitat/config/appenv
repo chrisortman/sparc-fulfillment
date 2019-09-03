@@ -41,3 +41,4 @@ DEFAULT_HOME_COLUMNS='{{cfg.default_home_columns}}'
 {{else}}
 # No Default Home Columns
 {{/if}}
+USE_RMID=true

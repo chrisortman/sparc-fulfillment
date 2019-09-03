@@ -1,0 +1,14 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  port: 3306
+  timeout: 5000
+  pool: 5
+
+production:
+  <<: *default
+  database: {{cfg.sparc.database_name}}
+  username: {{cfg.sparc.database_username}}
+  password: {{cfg.sparc.database_password}}
+  host: {{cfg.sparc.database_host}}
+  port: {{cfg.sparc.database_port}}
