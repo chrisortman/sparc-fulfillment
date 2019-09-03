@@ -105,4 +105,4 @@ group :assets do
   gem "activerecord-nulldb-adapter", require: false
 end
 
-gem 'eye', '~> 0.9.4', :group  => [:production, :development]
+gem 'eye', :group  => [:production, :development]
