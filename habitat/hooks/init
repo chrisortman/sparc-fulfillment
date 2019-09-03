@@ -41,4 +41,3 @@ if [[ -e {{pkg.svc_data_path}}/migrate ]]; then
 
   rm {{pkg.svc_data_path}}/migrate
 fi
-
