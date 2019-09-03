@@ -18,20 +18,10 @@
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR~
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.~
 
-octopus:
-  environments:
-    - test
-    - development
-    - testing
-    - staging
-    - production
-  development:
-    sparc:
-      adapter: mysql2
-      username: root
-      database: sparc-request_development
-  test: # configured for travis-ci
-    sparc:
-      adapter: mysql2
-      username: travis
-      database: test_sparc_request # for travis-ci, needs to match sparc-request test database name
+module Features
+  module SOS
+    def sos
+      save_and_open_screenshot
+    end
+  end
+end

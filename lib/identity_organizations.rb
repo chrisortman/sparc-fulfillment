@@ -27,19 +27,16 @@ class IdentityOrganizations
     fetch_rights
     organization_ids = @super_user_orgs + authorized_child_organizations(@super_user_orgs) + @clinical_provider_orgs
 
-    Protocol.
-      includes(
-        :human_subjects_info,
-        :subsidy,
-        :service_requests,
-        project_roles: [:identity],
-        sparc_protocol: [:service_requests],
-        sub_service_request: [:service_requester, :owner, :service_request]
-      ).where(
-        sub_service_requests: {
-          organization_id: organization_ids
-        }
-      ).distinct
+    Protocol.includes(
+      :human_subjects_info,
+      :subsidy,
+      :service_requests,
+      project_roles: [:identity],
+      sparc_protocol: [:service_requests],
+      sub_service_request: [:owner, :service_requester, :service_request]
+    ).where(
+      sub_service_requests: {organization_id: organization_ids}
+    ).distinct
 
   end
 
