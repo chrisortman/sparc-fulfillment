@@ -318,7 +318,7 @@ _create_symlinks() {
   ln -sfv ${pkg_svc_config_path}/database.yml ${pkg_prefix}/static/release/config/database.yml
   ln -sfv ${pkg_svc_config_path}/faye.yml ${pkg_prefix}/static/release/config/faye.yml
   ln -sfv ${pkg_svc_config_path}/sparc_db.yml ${pkg_prefix}/static/release/config/sparc_db.yml
-  ln -sfv ${pkg_svc_config_path}/appenv ${pkg_prefix}/static/release/.env
+  ln -sfv ${pkg_svc_config_path}/dotenv ${pkg_prefix}/static/release/.env
 }
 
 # The default implementation is to strip any binaries in $pkg_prefix of their
