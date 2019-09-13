@@ -37,9 +37,8 @@ def faye_log
 end
 
 def delayed_job_process(proxy, name)
-  rails_env = proxy.env['RAILS_ENV']
   proxy.process(name) do
-    start_command "bin/delayed_job -e #{rails_env} run"
+    start_command "bin/delayed_job run"
     pid_file "tmp/pids/#{name}.pid"
     stdall dj_log(name)
     daemonize true
