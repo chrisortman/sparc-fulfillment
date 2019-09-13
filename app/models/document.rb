@@ -1,4 +1,4 @@
-# Copyright © 2011-2018 MUSC Foundation for Research Development~
+# Copyright © 2011-2019 MUSC Foundation for Research Development~
 # All rights reserved.~
 
 # Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:~
@@ -25,7 +25,7 @@ class Document < ApplicationRecord
   belongs_to :documentable, polymorphic: true
 
   validates :title, presence: true
-  
+
   def path
     raise "Cannot generate path for a document that has not been saved (#{self.title})" if self.id.blank?
     [ENV.fetch('DOCUMENTS_FOLDER'), id].join('/')
@@ -42,8 +42,12 @@ class Document < ApplicationRecord
   def downloaded?
     last_accessed_at
   end
-  
+
   def accessible_by?(identity)
     !(documentable_type == 'Identity') || (documentable_type == 'Identity' && documentable == identity)
+  end
+
+  def unique_selector
+    "#{documentable_type.downcase}_#{documentable_id}"
   end
 end
