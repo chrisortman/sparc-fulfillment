@@ -3,7 +3,7 @@
 
 pkg_name=sparc-fulfillment
 pkg_origin=chrisortman
-pkg_version="2.8.5"
+pkg_version="2.9.0"
 ruby_pkg="core/ruby24"
 ruby_major="2.4.0"
 
