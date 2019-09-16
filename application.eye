@@ -61,7 +61,6 @@ Eye.application 'fulfillment' do
   env ({
     "PORT" => RAILS_PORT 
   })
-  load_env ".env"
 #  env 'APP_ENV' => 'production' # global env for each processes
   trigger :flapping, times: 10, within: 1.minute, retry_in: 10.minutes
 
