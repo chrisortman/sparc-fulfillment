@@ -303,6 +303,7 @@ do_install() {
 _create_symlinks() {
   rm -rfv ${pkg_prefix}/static/release/log
   rm -rfv ${pkg_prefix}/static/release/tmp
+  rm -rfv ${pkg_prefix}/static/release/db/backup
   rm -rfv ${pkg_prefix}/static/release/documents
   rm -rfv ${pkg_prefix}/static/release/public/system
   rm -rfv ${pkg_prefix}/static/release/config/database.yml
@@ -312,6 +313,7 @@ _create_symlinks() {
 
   ln -sfv ${pkg_svc_var_path}/log ${pkg_prefix}/static/release/log
   ln -sfv ${pkg_svc_var_path}/tmp ${pkg_prefix}/static/release/tmp
+  ln -sfv ${pkg_svc_var_path}/backup ${pkg_prefix}/static/release/db/backup
   ln -sfv ${pkg_svc_data_path}/documents ${pkg_prefix}/static/release/documents
   ln -sfv ${pkg_svc_data_path}/system ${pkg_prefix}/static/release/public/system
 
