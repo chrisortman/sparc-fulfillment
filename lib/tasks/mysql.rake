@@ -12,7 +12,7 @@ namespace :mysql do
     require 'yaml'
     db = YAML::load( File.open( File.join(Rails.root, 'config', 'database.yml') ) )[ Rails.env ]
     file = File.join( directory, "#{Rails.env}_#{DateTime.now.to_s}.sql" )
-    p command = "mysqldump --opt --skip-add-locks -u #{db['username']} -p#{db['password']} #{db['database']} | gzip > #{file}.gz"
+    p command = "mysqldump --opt --skip-add-locks -u #{db['username']} -p#{db['password']} -h #{db['host']} #{db['database']} | gzip > #{file}.gz"
     exec command
   end
 
@@ -32,7 +32,7 @@ namespace :mysql do
 
     puts "please wait, this may take a minute or two..."
     if file =~ /\.gz(ip)?$/
-      exec "gunzip < #{file} | mysql  -u #{db['username']} -p#{db['password']} #{db['database']}"
+      exec "gunzip < #{file} | mysql  -u #{db['username']} -p#{db['password']} -h #{db['host']} #{db['database']}"
     else
       exec "mysqlimport -u #{db['username']} -p#{db['password']} #{db['database']} #{file}"
     end

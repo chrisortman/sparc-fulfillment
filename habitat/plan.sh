@@ -23,7 +23,7 @@ pkg_deps=(
   core/mysql-client
   core/rsync
   core/zlib
-
+  core/gzip
   $ruby_pkg
   )
 pkg_build_deps=(
