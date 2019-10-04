@@ -72,7 +72,13 @@ class Participant < ApplicationRecord
   end
 
   def date_of_birth=(dob)
-    write_attribute(:date_of_birth, Time.strptime(dob, "%m/%d/%Y")) if dob.present?
+    
+    if dob =~ /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/
+      write_attribute(:date_of_birth, Time.strptime(dob, "%m/%d/%Y")) if dob.present?
+    else
+      write_attribute(:date_of_birth, dob&.to_datetime)
+    end
+    
   end
 
   def phone_number_format

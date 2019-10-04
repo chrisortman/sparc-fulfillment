@@ -24,10 +24,10 @@ namespace :data do
       :external_id
     ]
 
-    CSV.open("tmp/participants.csv","wb") do |csv|
+    CSV.open("tmp/patient_registry.csv","wb") do |csv|
 
       csv << [
-        "Patient ID (Records to be Merged)", "Patient MRN", "Patient Name",  "Patient Middle Initial",  "Patient Status",  "Patient DOB", "Patient Gender",  "Patient Ethnicity", "Patient Race",  "Patient Address", "Patient Phone Number",  "Patient City",  "Patient State", "Patient Zip Code",  "Patient External ID"
+        "Patient ID (Records to Merge)", "Patient MRN", "Patient Name",  "Patient Middle Initial",  "Patient Status",  "Patient DOB", "Patient Gender",  "Patient Ethnicity", "Patient Race",  "Patient Address", "Patient Phone Number",  "Patient City",  "Patient State", "Patient Zip Code",  "Patient External ID"
       ]
       Participant.all.to_a.group_by{ |p| [p.last_name.downcase.strip,p.first_name.downcase.strip,p.mrn.strip] }.each do |key, rows|
 
