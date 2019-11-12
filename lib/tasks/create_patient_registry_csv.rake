@@ -1,6 +1,22 @@
 require 'csv'
 
 namespace :data do
+  desc "Gives a report of participantes with the same MRN, likely to be duplicates people with incorrect data entry"
+  task duplicate_mrn_report: :environment do
+    CSV.open("tmp/duplicate_mrns.csv","wb") do |csv|
+      Participant.all.to_a.group_by{ |p| [p.mrn.strip] }.each do |key, rows|
+        if rows.size > 1
+          puts "I finded one"
+          rows.each do |row|
+            csv << [
+              row.mrn, row.first_name, row.middle_initial, row.last_name, row.protocols.map(&:id).join(",")
+            ]
+          end
+        end
+      end
+    end
+  end
+
   desc "Create patient registry file that can be used to merge duplicate participants"
   task create_patient_registry_csv: :environment do
 

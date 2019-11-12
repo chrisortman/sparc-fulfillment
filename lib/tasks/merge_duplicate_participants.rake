@@ -21,6 +21,7 @@
 ### Patient DOB column needs to be in this format:  "Month/Date/Year".  Example:  "2/27/1953".
 ### Last time we had errors because a column name was not named the correct way:  'Patient External ID'
 namespace :data do
+
   desc "Merge duplicate Participants"
   task merge_duplicate_participants: :environment do
 
