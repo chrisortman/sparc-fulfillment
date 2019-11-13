@@ -34,7 +34,7 @@ namespace :mysql do
     if file =~ /\.gz(ip)?$/
       exec "gunzip < #{file} | mysql  -u #{db['username']} -p#{db['password']} -h #{db['host']} #{db['database']}"
     else
-      exec "mysqlimport -u #{db['username']} -p#{db['password']} #{db['database']} #{file}"
+      exec "mysqlimport -u #{db['username']} -p#{db['password']} -h #{db['host']} #{db['database']} #{file}"
     end
   end
 end
