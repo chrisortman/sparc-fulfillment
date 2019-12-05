@@ -132,10 +132,14 @@ module ParticipantHelper
   end
 
   def phoneNumberFormatter(participant)
-    if participant.phone.length == 10
-      "#{participant.phone[0..2]}-#{participant.phone[3..5]}-#{participant.phone[6..10]}"
+    if participant.phone.present?
+      if participant.phone.length == 10
+        "#{participant.phone[0..2]}-#{participant.phone[3..5]}-#{participant.phone[6..10]}"
+      else
+        participant.phone
+      end
     else
-      participant.phone
+      ""
     end
   end
 
