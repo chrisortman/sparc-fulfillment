@@ -45,3 +45,5 @@ DEFAULT_HOME_COLUMNS='{{cfg.default_home_columns}}'
 # No Default Home Columns
 {{/if}}
 USE_RMID=true
+VALIDATE_MRN=true
+CLINICAL_SERVICES=true

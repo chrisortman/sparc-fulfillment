@@ -3,9 +3,9 @@
 
 pkg_name=sparc-fulfillment
 pkg_origin=chrisortman
-pkg_version="2.9.0"
-ruby_pkg="core/ruby24"
-ruby_major="2.4.0"
+pkg_version="3.0.0"
+ruby_pkg="core/ruby25"
+ruby_major="2.5.0"
 
 # Have to do this because we are creating the package from our git repo
 pkg_filename=${pkg_name}-${pkg_version}.tar.gz
@@ -128,6 +128,7 @@ do_setup_environment() {
 }
 do_build() {
 
+  gem install bundler -v 2.1.2 -n bin --no-ri --no-rdoc
   # we need single quotes otherwise the extconf doesn't build the
   # extension.
   bundle config build.nokogiri '${NOKOGIRI_CONFIG}'
