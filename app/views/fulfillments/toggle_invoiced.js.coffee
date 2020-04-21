@@ -18,42 +18,7 @@
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR~
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.~
 
-class ParticipantInformation
+$('#fulfillments-table').bootstrapTable('refresh')
 
-  require 'csv'
-
-  def generate
-
-    participants = Participant.all
-
-    CSV.open("participant_info.csv", "wb") do |csv|
-      csv << ["Protocol ID", "Request ID", "(Service Provider) Organization", "Short Title", "Long Title", "PI Name", "Funding Source", "Arm Name", "Patient ID", "Patient MRN", "Patient Name", "Patient Middle Initial", "Patient Date of Birth", "Patient Gender", "Patient Ethnicity", "Patient Race", "Patient Address", "Patient Phone #", "City", "State", "Zip Code", "External ID"]
-      participants.each do |participant|
-        csv << [
-           participant.protocol_id,
-           participant.protocol.sub_service_request_id,
-           participant.protocol.try(:organization).try(:name),
-           participant.protocol.short_title,
-           participant.protocol.title,
-           participant.protocol.pi.full_name,
-           participant.protocol.funding_source,
-           participant.try(:arm).try(:name),
-           participant.id,
-           participant.mrn,
-           "#{participant.first_name} #{participant.last_name}",
-           participant.middle_initial,
-           participant.date_of_birth,
-           participant.gender,
-           participant.ethnicity,
-           participant.race,
-           participant.address,
-           participant.phone,
-           participant.city,
-           participant.state,
-           participant.zipcode,
-           participant.sparc_id
-        ]
-      end
-    end
-  end
-end
+$(document).on 'load-success.bs.table', '#fulfillments-table', ->
+  $('input.invoice_toggle').bootstrapToggle()
