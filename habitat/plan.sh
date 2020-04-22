@@ -92,8 +92,8 @@ do_setup_environment() {
 
   set_runtime_env TZ "America/Chicago"
   set_runtime_env RAILS_ROOT "${pkg_prefix}/${app_sub_path}"
+  push_runtime_env GEM_PATH "${pkg_prefix}/${app_sub_path}/vendor/bundle/ruby/${ruby_major}"
 
-  push_runtime_env GEM_PATH "${pkg_prefix}/vendor/bundle/ruby/${ruby_major}"
   set_runtime_env LD_LIBRARY_PATH "$(pkg_path_for "core/gcc-libs")/lib:$(pkg_path_for "core/libevent")"
   set_runtime_env HOME ${pkg_svc_var_path}/home
 
@@ -104,7 +104,7 @@ do_setup_environment() {
   set_runtime_env EYE_HOME "${pkg_svc_var_path}/eye"
 
   set_buildtime_env HOME /root
-  push_buildtime_env GEM_PATH "/hab/cache/src/${pkg_name}-${pkg_version}/static/release/vendor/bundle/ruby/${ruby_major}"
+  push_buildtime_env GEM_PATH "/hab/cache/src/${pkg_name}-${pkg_version}/vendor/bundle/ruby/${ruby_major}"
   mkdir --parents '/hab/cache/artifacts/studio_cache/yarn'
   set_buildtime_env YARN_CACHE_FOLDER '/hab/cache/artifacts/studio_cache/yarn'
 
