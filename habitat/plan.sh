@@ -128,7 +128,7 @@ do_setup_environment() {
 }
 do_build() {
 
-  gem install bundler -v 2.1.2 -n bin --no-ri --no-rdoc
+  gem install --install-dir vendor/bundle/ruby/${ruby_major} bundler -v 2.1.2 -n bin --no-ri --no-rdoc
   # we need single quotes otherwise the extconf doesn't build the
   # extension.
   bundle config build.nokogiri '${NOKOGIRI_CONFIG}'
@@ -299,6 +299,7 @@ do_install() {
   _create_process_bin "${pkg_prefix}/bin/rake" rake
   _create_process_bin "${pkg_prefix}/bin/rails" rails
   _create_process_bin "${pkg_prefix}/bin/eye" eye
+  _create_process_bin "${pkg_prefix}/bin/bundle" bundle
 }
 
 _create_symlinks() {
