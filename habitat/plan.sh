@@ -104,6 +104,7 @@ do_setup_environment() {
   set_runtime_env EYE_HOME "${pkg_svc_var_path}/eye"
 
   set_buildtime_env HOME /root
+  push_buildtime_env GEM_PATH "/hab/cache/src/${pkg_name}-${pkg_version}/vendor/bundle/ruby/${ruby_major}"
   mkdir --parents '/hab/cache/artifacts/studio_cache/yarn'
   set_buildtime_env YARN_CACHE_FOLDER '/hab/cache/artifacts/studio_cache/yarn'
 
