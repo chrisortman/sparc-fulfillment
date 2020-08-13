@@ -40,6 +40,6 @@ class SparcDbBase < ApplicationRecord
   # CWF databases by explicitly prefixing the appropriate SPARC
   # database name to tables belonging to it.
   def self.table_name_prefix
-    SPARC_DB["database"] + '.'
+    SparcDbBase.connection_config[:database] + '.'
   end
 end
