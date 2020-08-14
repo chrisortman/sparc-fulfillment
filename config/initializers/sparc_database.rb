@@ -18,4 +18,12 @@
 # INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR~
 # TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.~
 
-SPARC_DB = YAML.load_file(File.join(Rails.root, "config", "sparc_db.yml"))[Rails.env.to_s]
+
+config_file = File.join(Rails.root, "config", "sparc_db.yml")
+if File.exists?(config_file)
+  SPARC_DB = YAML.load_file(config_file)[Rails.env.to_s]
+else
+  main_config = ActiveRecord::Base.connection_config.dup
+  main_config[:database] = "sparc_rails"
+  SPARC_DB = main_config
+end
